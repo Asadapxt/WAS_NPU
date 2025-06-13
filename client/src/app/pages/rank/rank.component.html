@@ -1,0 +1,149 @@
+<div class="main-content">
+  <!-- กล่องแสดงจำนวนอาจารย์ และอันดับ 1, 2, 3  -->
+  <div class="box-container">
+    <div class="box">
+      <div class="d-flex justify-content-between items">
+        <div class="d-flex flex-column justify-content-between">
+          <h4>จำนวนอาจารย์</h4>
+          <h2>20000</h2>
+        </div>
+        <div>
+          <img src="images/teacher.jpg" class="profile-image" alt="teacher" />
+        </div>
+      </div>
+      <p>ผศ.ดร.อัษฎา ปรีชาเจริญกิจ1</p>
+    </div>
+
+    <div class="box">
+      <div class="d-flex justify-content-between items">
+        <div class="d-flex flex-column justify-content-between">
+          <h4>จำนวนอาจารย์</h4>
+          <h2>20000</h2>
+        </div>
+        <div>
+          <img src="images/human.jpg" class="profile-image" alt="teacher" />
+        </div>
+      </div>
+      <p>ผศ.ดร.อัษฎา ปรีชาเจริญกิจ2</p>
+    </div>
+
+    <div class="box">
+      <div class="d-flex justify-content-between items">
+        <div class="d-flex flex-column justify-content-between">
+          <h4>จำนวนอาจารย์</h4>
+          <h2>20000</h2>
+        </div>
+        <div>
+          <img src="images/human.jpg" class="profile-image" alt="teacher" />
+        </div>
+      </div>
+      <p>ผศ.ดร.อัษฎา ปรีชาเจริญกิจ3</p>
+    </div>
+
+    <div class="box box-four">
+      <div class="d-flex justify-content-between items">
+        <div class="d-flex flex-column justify-content-between">
+          <h4>จำนวนอาจารย์</h4>
+          <h2>20000</h2>
+        </div>
+        <div>
+          <img src="images/human.jpg" class="profile-image" alt="teacher" />
+        </div>
+      </div>
+      <p>ผศ.ดร.อัษฎา ปรีชาเจริญกิจ4</p>
+    </div>
+  </div>
+
+  <!-- แสดงกราฟ -->
+  <div class="graph-container">
+    <canvas baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      [type]="chartType">
+    </canvas>
+  </div>
+
+  <!-- ตารางแสดงผล -->
+  <div class="dashboard-container">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h3 class="nunito-sans-bold">อันดับผลงาน รอบการประเมินที่ {{ checkRound() }}</h3>
+        <p>ปีการศึกษา {{ checkAcademicYear() }}</p>
+      </div>
+
+      <!-- ช่องค้นหา -->
+      <form action="">
+        <div>
+          <select>
+            <option value="">คณะ</option>
+            <option value="">คณะทั้งหมด</option>
+            <option value="">คณะวิศวกรรมศาสตร์</option>
+            <option value="">คณะศิลปศาสตร์</option>
+          </select>
+
+          <input type="text" placeholder="ปีการศึกษา" />
+
+          <select>
+            <option value="">ระดับการประเมิน</option>
+            <option value="A">ระดับดีเด่น</option>
+            <option value="B">ระดับดีมาก</option>
+            <option value="C">ระดับดี</option>
+            <option value="D">ระดับพอใช้</option>
+            <option value="F">ระดับต้องปรับปรุง</option>
+          </select>
+
+          <select>
+            <option value="">รอบการประเมิน</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+
+          <button type="submit" class="btn-submit">
+            <i class="fa-solid fa-magnifying-glass" style="padding-right: 6px"></i>ค้นหา
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ตารางอันดับ -->
+    <div class="score-container table-responsive">
+      <table class="table-score">
+        <thead>
+          <tr class="sarabun-bold" style="background-color: rgba(239, 178, 37, 0.3);">
+            <td>อันดับ</td>
+            <td>ชื่ออาจารย์</td>
+            <td>คณะ</td>
+            <td>ระดับผลการประเมิน</td>
+            <td>คะแนน</td>
+            <td>ชั่วโมงภาระงาน</td>
+            <td>รายละเอียด</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let teacher of pagedData" class="sarabun-regular">
+            <td>{{ teacher.rank }}</td>
+            <td>{{ teacher.name }}</td>
+            <td>{{ teacher.faculty }}</td>
+            <td>
+              <span *ngIf="teacher.grade == 'A' " class="false">ดีเด่น</span>
+              <span *ngIf="teacher.grade == 'B' " class="true">ดีมาก</span>
+              <span *ngIf="teacher.grade == 'C' " class="true">ดี</span>
+              <span *ngIf="teacher.grade == 'D' " class="true">พอใช้</span>
+              <span *ngIf="teacher.grade == 'F' " class="true">ต้องปรับปรุง</span>
+            </td>
+            <td>{{ teacher.score }}</td>
+            <td>{{ teacher.hours }}</td>
+            <td><a class="more-info" style="cursor: pointer;" (click)="downloadPdf()">คลิก</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Change Table page -->
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">ย้อนกลับ</button>
+      <span>หน้า {{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">ถัดไป</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="main-bg">
+    <!-- Header -->
+    <div class="header">
+        <!-- ช่องค้นหา -->
+        <form (ngSubmit)="search()" #searchForm="ngForm">
+            <div class="search-box">
+                <input [(ngModel)]="searchName" type="text" name="name" id="" placeholder="ชื่อบุคลากร" />
+
+                <div class="custom-dropdown select" #fac_search (click)="toggleFacSearch_dd()" tabindex="0">
+                    <div class="selected-option">
+                        {{ searchFaculty ? 'คณะ' + searchFaculty : 'คณะทั้งหมด' }}
+                    </div>
+                    <ul class="options" *ngIf="facSearch_dd">
+                        <li (click)="selectSearchFaculty('', $event)"
+                            [class.active]="!searchFaculty">
+                            คณะทั้งหมด
+                        </li>
+                        <li *ngFor="let faculty of facultyOptions"
+                            (click)="selectSearchFaculty(faculty, $event)"
+                            [class.active]="searchFaculty === faculty">
+                            คณะ{{ faculty }}
+                        </li>
+                    </ul>
+                </div>
+
+                <select name="status" id="status" style="cursor: pointer;">
+                    <option value="">สถานะ</option>
+                    <option value="0">ยังไม่ประเมิน</option>
+                    <option value="1">ประเมินแล้ว</option>
+                </select>
+      
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-magnifying-glass" style="padding-right: 6px"></i>ค้นหา
+                </button>
+            </div>
+        </form>
+
+        <div class="download-btns">
+            <a class="download-btn mx-3">
+                <i class="fa-solid fa-download"></i>ดาวน์โหลดทั้งหมด
+            </a>
+        </div>
+    </div>
+
+    <!-- ตาราง -->
+    <div class="table-responsive">
+        <table class="table-container ">
+            <thead>
+                <tr style="background-color: rgba(239, 178, 37, 0.3);" class="sarabun-regular">
+                    <th>ลำดับ</th>
+                    <th>ชื่ออาจารย์</th>
+                    <th>คณะ</th>
+                    <th>ตำแหน่ง</th>
+                    <th>สถานะ</th>
+                    <th>แบบ ปว-03</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let teacher of pagedData" class="sarabun-regular">
+                    <td>{{ teacher.no }}</td>
+                    <td>{{ teacher.name }}</td>
+                    <td>{{ teacher.faculty }}</td>
+                    <td>{{ teacher.position }}</td>
+                    <td>
+                        <span *ngIf="teacher.status == 0" class="false">ยังไม่ประเมิน</span>
+                        <span *ngIf="teacher.status != 0" class="true"><i class="fa-solid fa-check"></i>ประเมินแล้ว</span>
+                    </td>
+                    <td>
+                        <a *ngIf="teacher.status == 0" class="download-btn-f">
+                            <i class="fa-solid fa-download"></i>ดาวน์โหลด PDF
+                        </a>
+                        <a *ngIf="teacher.status != 0" class="download-btn" (click)="downloadPdf(teacher.result_path, teacher.name)">
+                            <i class="fa-solid fa-download"></i>ดาวน์โหลด PDF
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pagination">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">ย้อนกลับ</button>
+        <span>หน้า {{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">ถัดไป</button>
+    </div>
+
+</div>

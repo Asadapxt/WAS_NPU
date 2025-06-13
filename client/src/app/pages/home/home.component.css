@@ -1,0 +1,151 @@
+.first-box {
+  display: flex;
+  justify-content: start;
+  background-color: rgba(239, 255, 157, 0.3);
+  padding: 20px 20px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+}
+
+.title{
+  display: flex; 
+  flex-direction: column;
+  margin: 1.5rem;
+}
+
+.custom-img {
+  width: 170px;
+  height: 250px;
+}
+
+.second-box {
+  background: linear-gradient(to right, #f5d76e, #ffe791);
+  margin-top: -30px;
+  position: relative;
+  z-index: 1;
+  padding: 3rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.2rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.third-box-bg {
+  background-color: rgba(239, 255, 157, 0.3);
+}
+
+.third-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+  flex-direction: row;
+  margin-top: -30px;
+}
+
+.text-formatt {
+  align-items: center;
+  max-width: auto;
+  width: 100%;
+  margin-top: 60px;
+}
+
+@media (max-width: 1024px) {
+  .first-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 20px;
+  }
+
+  .title {
+    text-align: center;
+  }
+  
+  .custom-img {
+    width: 120px;
+    height: 180px;
+  }
+
+  .second-box {
+    padding: 2rem;
+  }
+
+  .second-box h2{
+    font-size: 30px;
+  }
+
+  .third-box {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: -30px;
+  }
+
+  .text-formatt {
+    margin-top: 60px;
+  }
+
+  .text-formatt h4 {
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .text-formatt p {
+    font-size: 20px !important;
+    text-align: center !important; 
+  }
+
+  .more-info {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .second-box h2{
+    font-size: 25px;
+  }
+
+  .text-formatt h4 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .text-formatt p {
+    font-size: 18px !important;
+    text-align: center !important; 
+  }
+
+  .more-info {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 430px) {
+  .second-box {
+    padding: 1rem;
+  }
+
+  .second-box h2{
+    font-size: 20px;
+  }
+
+  .text-formatt h4 {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .text-formatt p {
+    font-size: 14px !important;
+    text-align: center !important; 
+  }
+
+  .more-info {
+    font-size: 12px;
+  }
+}

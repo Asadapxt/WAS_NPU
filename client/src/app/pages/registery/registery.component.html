@@ -1,0 +1,90 @@
+<div class="main-bg">
+    <div class="login-container">
+        <div class="logo sarabun-bold">
+            <img src="images/logoNpu.png" alt="">
+            <h1>Nakhonphanom</h1>
+            <h1 style="color: black!important;">University</h1>
+        </div>
+        <h6 style="color: black!important;">กรุณากรอกข้อมูลเพื่อเข้าสู่ระบบ</h6>
+
+        <form id="loginForm" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <div class="form-group">
+                <div class="input-wrapper" #fac (click)="toggleFac_dd()" tabindex="0">
+                    <i class="fas fa-university"></i>
+                    <div class="selected-option">
+                        {{ selectedUser.faculty || 'เลือกคณะ' }}
+                    </div>
+                    <ul class="options" *ngIf="fac_dd">
+                        <li
+                            *ngFor="let faculty of facultyOptions"
+                            (click)="selectFaculty(faculty, $event)"
+                            [class.active]="selectedUser.faculty === faculty"
+                        >
+                            {{ 'คณะ' + faculty }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper" #field (click)="toggleField_dd()" tabindex="0">
+                    <i class="fas fa-book-open"></i>
+                    <div class="selected-option">
+                        {{ selectedUser.field  || 'เลือกสาขา' }}
+                    </div>
+                    <ul class="options" *ngIf="field_dd">
+                        <li
+                            *ngFor="let field of filteredFields"
+                            (click)="selectField(field, $event)"
+                            [class.active]="selectedUser.field === field"
+                        >
+                            {{ field }}
+                        </li>
+                    </ul>
+                </div>
+                <span *ngIf="!this.selectedUser.faculty" style="color: red;">* กรุณาเลือกคณะก่อน</span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper" #pw (click)="togglePositionWork_dd()" tabindex="0">
+                    <i class="fas fa-briefcase"></i>
+                    <div class="selected-option">
+                        {{ selectedUser.position_work || 'เลือกตำแหน่ง' }}
+                    </div>
+                    <ul class="options" *ngIf="positionWork_dd">
+                        <li
+                            *ngFor="let position_work of positionWorkOptions"
+                            (click)="selectPositionWork(position_work, $event)"
+                            [class.active]="selectedUser.position_work === position_work"
+                        >
+                            {{ position_work }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper" #p (click)="togglePostion_dd()" tabindex="0">
+                    <i class="fas fa-user-graduate"></i>
+                    <div class="selected-option">
+                        {{ selectedUser.position || 'เลือกตำแหน่ง/ระดับ' }}
+                    </div>
+                    <ul class="options" *ngIf="position_dd">
+                        <li
+                            *ngFor="let position of positionOptions"
+                            (click)="selectPosition(position, $event)"
+                            [class.active]="selectedUser.position === position"
+                        >
+                            {{ position }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn">
+                <span class="btn-text">ยืนยันการส่งข้อมูล</span>
+            </button>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,109 @@
+.main-content {
+  padding: 20px;
+  width: 100%;
+  height: auto;
+}
+
+.pre-title {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.lecturer-title {
+  margin-top: 3.5rem;
+}
+
+.lecturer-title h5 {
+  font-size: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 8px;
+  cursor: pointer;
+  margin: 20px 0 0 3rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+.score-column {
+  width: 15%;
+  text-align: center;
+}
+
+.development-table td {
+  height: 50px;
+}
+
+.submit-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.btn-submit {
+  background: linear-gradient(to right, #1994d6, #42b4f1);
+  color: #ffffff;
+  border: none;
+  padding: 14px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit:hover {
+  background: linear-gradient(to bottom, #1994d6, #1686c2);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1024px) {
+    .pre-title {
+        margin-right: auto;
+        font-size: 16px;
+    }
+
+    .pre-title h5,
+    .title h5,
+    .lecturer-title h5,
+    .form-group {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 430px) {
+    input[type="radio"] {
+        margin: 20px 0 0 0;
+    }
+}

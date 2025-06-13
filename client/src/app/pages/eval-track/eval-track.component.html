@@ -1,0 +1,82 @@
+<div class="main-bg">
+    <div class="container">
+        <div class="profile">
+            <div class="profile-image">
+                <img src="images/human.jpg" alt="">
+            </div>
+            <div class="profile-detail">
+                <div class="text-title sarabun-bold">
+                    <p>ชื่อ-สกุล</p>
+                    <p>คณะ</p>
+                    <p>ตำแหน่ง</p>
+                    <p>ตำแหน่งงาน</p>
+                </div>
+                <div class="text-detail sarabun-regular">
+                    <p>ดร.อัษฎา ปรีชาเจริญกิจ</p>
+                    <p>วิทยาการคอมพิวเตอร์</p>
+                    <p>ผู้ช่วยศาสตราจารย์</p>
+                    <p>คณบดี</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ตาราง -->
+    <div class="d-flex align-items-center mt-4">
+        <button class="btn btn-outline-secondary" (click)="decreaseYear()">&#60;</button>
+        
+        <h4 class="mx-3 mb-0">ปีการศึกษา {{ year }}</h4>
+        
+        <button class="btn btn-outline-secondary" (click)="increaseYear()">&#62;</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table-container ">
+            <thead>
+                <tr style="background-color: rgba(239, 178, 37, 0.3);" class="sarabun-regular">
+                    <th>หัวข้อ</th>
+                    <th>สถานะ</th>
+                    <th>รอบการประเมินผลการปฏิบัติงาน</th>
+                    <th>ระดับผลการประเมิน</th>
+                    <th>คะแนน</th>
+                    <th>รายละเอียด</th>
+                </tr>
+            </thead>
+            <!-- ถ้าเจอข้อมูลในปีการศึกษา -->
+            <tbody *ngIf="checkData(year) == 1">
+                <tr *ngFor="let data of getData(year)" class="sarabun-regular">
+                    <td>
+                        <span *ngIf="data.round == 0">จัดทำข้อตกลงการปฏิบัติงานกับหัวหน้าหน่วยงานตามแบบ ปว.01</span>
+                        <span *ngIf="data.round != 0">จัดทำข้อตกลงการปฏิบัติงานกับหัวหน้าหน่วยงานตามแบบ ปว.02</span>
+                    </td>
+                    <td>
+                        <span *ngIf="data.status == 0" class="false">ยังไม่ประเมิน</span>
+                        <span *ngIf="data.status != 0" class="true">ประเมินแล้ว</span>
+                    </td>
+                    <td>{{ data.round }}</td>
+                    <td>
+                        <span *ngIf="data.grade == 'A' ">ดีเด่น</span>
+                        <span *ngIf="data.grade == 'B' ">ดีมาก</span>
+                        <span *ngIf="data.grade == 'C' ">ดี</span>
+                        <span *ngIf="data.grade == 'D' ">พอใช้</span>
+                        <span *ngIf="data.grade == 'F' ">ต้องปรับปรุง</span>
+                    </td>
+                    <td>{{ data.score }}</td>
+                    <td>
+                        <a class="moreinfo-btn">คลิก</a>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- ถ้าไม่เจอข้อมูลในปีการศึกษา -->
+            <tbody *ngIf="checkData(year) != 1">
+                <tr>
+                    <td>ไม่มีข้อมูล</td>
+                    <td>ไม่มีข้อมูล</td>
+                    <td>ไม่มีข้อมูล</td>
+                    <td>ไม่มีข้อมูล</td>
+                    <td>ไม่มีข้อมูล</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

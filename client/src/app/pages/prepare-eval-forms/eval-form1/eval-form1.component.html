@@ -1,0 +1,623 @@
+<header class="sarabun-regular">
+    <a (click)="examplePdf()" class="exameple-btn"><i class="fa-solid fa-file"></i>ตัวอย่างการเขียนแบบ ป-ว 01</a>
+    <a (click)="previewPdf()" class="exameple-btn"><i class="fa-solid fa-eye"></i>ดูตัวอย่างแบบ ป-ว 01 PDF</a>
+</header>
+<div class="main-content" #pdfContent id="pdf-content">
+    <div class="pre-title sarabun-bold">
+        <h5>แบบ ป-ว 01</h5>
+    </div>
+
+    <div class="title sarabun-bold">
+        <h5>แบบกำหนดข้อตกลงการปฏิบัติงานของพนักงานมหาวิทยาลัย ประเภทวิชาการ</h5>
+        <h5>(Term of Reference: TOR)</h5>
+    </div>
+
+    <div class="sarabun-bold title-container">
+        <div class="title-detail">
+            <h5 class="mx-2"><strong>ชื่อผู้รับการประเมิน ผู้ช่วยฟหกฟหกฟหก</strong></h5>
+            <h5 class="mx-2"><strong>ตำแหน่ง / ระดับ ผู้ช่วยฟหกฟหกฟหก</strong></h5>
+        </div> 
+        <div class="title-detail">
+            <h5><strong>สังกัด ผู้ช่วยฟหกฟหกฟหก</strong></h5>
+            <h5><strong>ตั้งแต่วันที่ 1 ตุลาคม พ.ศ. 2555  ถึงวันที่ 30 กันยายน พ.ศ. 2556</strong></h5>
+        </div>
+    </div>
+
+    <div class="statement sarabun-regular">
+        <strong sarabun-bold>คำชี้แจง</strong> <p class="d-inline mx-2">การกำหนดข้อตกลงการปฏิบัติงานของพนักงานในมหาวิทยาลัยนครพนม ดังนี้</p>
+    </div>
+
+    <div class="indent sarabun-regular">
+        <p>1. พนักงานในมหาวิทยาลัย ที่ดำรงตำแหน่งประเภทผู้บริหาร ให้นำภาระงานตามตำแหน่งภาพแทนภาระงานที่ 4 ด้านได้ ดังนี้</p>
+        <div class="double-indent">
+            <p>(1) ตำแหน่งอธิการบดี รองอธิการบดี คณบดี หรือผู้อำนวยการ ให้มีภาระงานบริหารทดแทนภาระงานตาม <a (click)="downloadPdf()" class="a" style="cursor: pointer;">เกณฑ์การประเมิน</a> ข้อ 5 ได้ร้อยละ 100</p>
+            <p>(2) ผู้ช่วยอธิการบดี รองคณบดี หรือรองหัวหน้าหน่วยงานที่เรียกชื่ออื่นที่มีฐานะเทียบเท่าคณะ ให้มีภาระงานบริหารทดแทนภาระงานตาม <a (click)="downloadPdf()" class="a" style="cursor: pointer;">เกณฑ์การประเมิน</a> ข้อ 5 ได้ร้อยละ 50 และให้มีภาระงานตามเกณฑ์การประเมินข้อ 5(1) ถึงข้อ 5(4) อีกร้อยละ 50</p>
+        </div>
+        <p>2. พนักงานมหาวิทยาลัย สามารถนำภาระงานทั้ง 4 ด้าน มาแทนกันได้ โดยต้องมีภาระงานรวมไม่น้อยกว่าร้อยละ 270 ชั่วโมงภาระงานต่อปีการศึกษา</p>
+    </div>
+
+    <div class="underline" style="margin: 30px 0; border-bottom: 3px solid #000;"></div>
+
+    <div class="statement sarabun-regular">
+        <strong sarabun-bold>ส่วนที่ 1 ผลสัมฤทธิ์ของงาน</strong>
+    </div>
+
+    <div class="dropdown-wrapper">
+        <button type="button" #dropdownCheck (click)="toggleDropdownByKey('dropdownOpen')" class="dropdown-button sarabun-regular">
+            เลือกประเภทภาระงาน
+            <i class="fa-solid fa-caret-down" 
+                [ngClass]="{ 'rotate-up': dropdownOpen, 'rotate-down': !dropdownOpen }">
+            </i>
+        </button>
+
+        <ul *ngIf="dropdownOpen" class="dropdown-menu">
+            <li (click)="selectWorkload('1')">1. ภาระงานสอน</li>
+            <li (click)="selectWorkload('2')">2. ภาระงานวิจัย</li>
+            <li (click)="selectWorkload('3')">3. ภาระงานบริการวิชาการ</li>
+            <li (click)="selectWorkload('4')">4. ภาระงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย</li>
+        </ul>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+
+        <div *ngFor="let type of addedWorkloads let i = index" class="table-responsive">
+            <div *ngIf="type === '1'" class="table-container"> <!-- ตารางภาระงานสอน -->
+                <div class="container sarabun-regular">
+                    <div class="container-title">
+                        <strong>1. ภาระงานสอน (คิดเป็นร้อยละ 35 ของภาระงานรวม) ให้คิดภาระงานสอนเป็นปีการศึกษา</strong>
+                        <div class="cancel-button cancel-position" (click)="deleteWorkload(i, type)">
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <table #table1>
+                        
+                        <tr class="header-row">
+                            <th rowspan="2" style="width: 40%;">ภาระงาน</th>
+                            <th rowspan="2" style="width: 20%;">ระดับการศึกษา</th>
+                            <th colspan="2">ชั่วโมงภาระงาน</th>
+                            <th rowspan="2" class="work-hours">ชั่วโมงภาระงาน<sup> 1</sup></th>
+                        </tr>
+                        <tr class="header-row">
+                            <th>บรรยาย</th>
+                            <th>ปฏิบัติการ<sup> 3</sup></th>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <div class="dropdown-wrapper">
+                                    <button type="button" #firstDropdownCheck (click)="toggleDropdownByKey('firstTypeDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                                        เพิ่มภาระงาน
+                                        <i class="fa-solid fa-caret-down" 
+                                            [ngClass]="{ 'rotate-up': firstTypeDropdown, 'rotate-down': !firstTypeDropdown }">
+                                        </i>
+                                    </button>
+                                    <ul *ngIf="firstTypeDropdown" class="dropdown-menu">
+                                        <li (click)="selectType('1.1')">1.1 ภาระงานสอน</li>
+                                        <li (click)="selectType('1.2')">1.2 ภาระงานควบคุมฟาร์ม</li>
+                                        <li (click)="selectType('1.3')">1.3 ภาระงานรายวิชาปัญหาพิเศษ เทคนิคการวิจัย อภิปราย สัมนา หรือวิชาอื่นที่มีลักษณะคล้ายคลึงกัน</li>
+                                        <li (click)="selectType('1.4')">1.4 ภาระงานการควบคุมประสบการณ์วิชาชีพ งานนิเทศ สหกิจศึกษา ทวิภาคี หรือวิชาอื่นที่มีลักษณะคล้ายคลึงกัน</li>
+                                        <li (click)="selectType('1.5')">1.5 ภาระงานการควบคุมวิทยานิพนธ์/สารนิพนธ์ ระดับบัณฑิตศึกษา</li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        
+                        <ng-container *ngFor="let workload of teaching let i = index" >
+                            <tr>
+                                <td>
+                                    <div class="container-title">
+                                        <ng-container *ngIf="workload.type == '1.1'">1.{{i + 1}} ภาระงานสอน</ng-container>
+                                        <ng-container *ngIf="workload.type == '1.2'">1.{{i + 1}} ภาระงานควบคุมฟาร์ม</ng-container>
+                                        <ng-container *ngIf="workload.type == '1.3'">1.{{i + 1}} ภาระงานรายวิชาปัญหาพิเศษ เทคนิคการวิจัย อภิปราย สัมนา หรือวิชาอื่นที่มีลักษณะคล้ายคลึงกัน</ng-container>
+                                        <ng-container *ngIf="workload.type == '1.4'">1.{{i + 1}} ภาระงานการควบคุมประสบการณ์วิชาชีพ งานนิเทศ สหกิจศึกษา ทวิภาคี หรือวิชาอื่นที่มีลักษณะคล้ายคลึงกัน</ng-container>
+                                        <ng-container *ngIf="workload.type == '1.5'">1.{{i + 1}} ภาระงานการควบคุมวิทยานิพนธ์/สารนิพนธ์ ระดับบัณฑิตศึกษา</ng-container>
+                                        <div class="cancel-button" (click)="deleteFirstType(i)">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </div>
+                                    <textarea #textArea (input)="autoResize(textArea)" name="" id=""></textarea>
+                                </td>
+                                <td>
+                                    <select name="education_lev{{i}}" id="" class="mx-auto" required>
+                                        <option value="">เลือกระดับการศึกษา</option>
+                                        <option value="">ปริญญาเอก</option>
+                                        <option value="">ปริญญาโท</option>
+                                        <option value="">ปริญญาตรี</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" min="0" max="1000" [(ngModel)]="workload.lecture_hour" name="lecture{{i}}" required>
+                                </td>
+                                <td>
+                                    <input type="number" min="0" max="1000" [(ngModel)]="workload.practical_hour" name="practical{{i}}" required>
+                                </td>
+                                <td class="text-center"><p>{{ workload.lecture_hour + workload.practical_hour }}</p></td>
+                            </tr>
+                        </ng-container>
+                        
+                        <tr class="fw-bold">
+                            <td colspan="4" class="text-center fw-bold">รวม</td>
+                            <td class="text-center">{{ first_totalHour }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="4" class="text-center">ชั่วโมงภาระงานที่นำไปคิดเป็นงานสอน<sup> 4</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('1', first_totalHour) | number:'1.0-0' }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="4" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 35 ÷ 270)<sup> 2</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('1', (first_totalHour)) * 35/270 | number:'1.0-0' }}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="note">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ชั่วโมงปฏิบัติการให้รวมทั้งการทดลองและปฏิบัติการจริง</p>
+                            <p>2. ภาระงานรวมร้อยละ 35 เท่ากับ 270 ชั่วโมงภาระงาน</p>
+                            <p>3. รายวิชาปฏิบัติการ/ทดลอง 1 หน่วยกิต โครงสร้างรายวิชาอาจเป็น 2 หรือ 3 ชั่วโมง/ให้คิดเป็น 3 ชั่วโมง</p>
+                            <p>4. ภาระงานสอนคิดได้สูงสุด ร้อยละ 35 (270 ชั่วโมงภาระงาน) <span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 270 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="type === '2'" class="table-container"> <!-- ตารางภาระงานวิจัย -->
+                <div class="container sarabun-regular">
+                    <div class="container-title">
+                        <strong>2. ภาระงานวิจัย (คิดเป็นร้อยละ 35 ของภาระงานรวม)</strong>
+                        <div class="cancel-button cancel-position" (click)="deleteWorkload(i, type)">
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <tr class="header-row">
+                            <th style="width: 40%;">ภาระงาน</th>
+                            <th style="width: 20%;">บทบาท<sup> 2</sup></th>
+                            <th>ฐานข้อมูล<sup> 3</sup></th>
+                            <th>ชั่วโมงภาระงาน</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown-wrapper">
+                                    <button type="button" #secondDropdownCheck (click)="toggleDropdownByKey('secondTypeDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                                        เพิ่มภาระงาน
+                                        <i class="fa-solid fa-caret-down" 
+                                            [ngClass]="{ 'rotate-up': secondTypeDropdown, 'rotate-down': !secondTypeDropdown }">
+                                        </i>
+                                    </button>
+                                    <ul *ngIf="secondTypeDropdown" class="dropdown-menu">
+                                        <li (click)="selectType('2.1')">ภาระงานวิจัย</li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <ng-container *ngFor="let workload of research let i = index" >
+                            <tr>
+                                <td>
+                                    <div class="container-title">
+                                        <ng-container *ngIf="workload.type == '2.1'">1.{{i + 1}} ภาระงานวิจัย</ng-container>
+                                        <div class="cancel-button" (click)="deleteSecondType(i)">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </div>
+                                    <textarea #textArea (input)="autoResize(textArea)" name="" id=""></textarea>
+                                </td>
+                                <td>
+                                    <select name="author{{i}}" id="" class="mx-auto">
+                                        <option value="">เลือกบทบาท</option>
+                                        <option value="">First Author</option>
+                                        <option value="">Corresponding Author</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="database-name">
+                                </td>
+                                <td>
+                                    <input type="number" min="0" max="1000" [(ngModel)]="workload.workload_hour" name="second_workload{{i}}">
+                                </td>
+                            </tr>
+                        </ng-container>
+                        
+                        <tr class="fw-bold">
+                            <td colspan="3" class="text-center fw-bold">รวม</td>
+                            <td class="text-center">{{ second_totalHour }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="3" class="text-center">ชั่วโมงภาระงานที่นำไปคิดเป็นงานวิจัย<sup> 4</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('2', second_totalHour) | number:'1.0-0' }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="3" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 35 ÷ 270)<sup> 1</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('2', (second_totalHour)) * 35/270 | number:'1.0-0' }}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="note">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ร้อยละ 35 เท่ากับ 270 ชั่วโมงภาระงาน</p>
+                            <p>2. ผู้ประเมินต้องเป็นผู้ประพันธ์อันดับแรก (First Author) หรือผู้ประพันธ์บรรณกิจ (Corresponding Author) เท่านั้น</p>
+                            <p>3. ฐานข้อมูล หมายถึง ฐานข้อมูลการเผยแพร่ผลงานวิจัยตามเกณฑ์การขอกำหนดตำแหน่งทางวิชาการที่ ก.พ.อ. กำหนด ดังนั้น ผลงานวิจัยที่สามารถนำมาขอภาระงานวิจัยได้คือผลงานวิจัยที่ได้รับการเผยแพร่ ตามประกาศ ก.พ.อ. เรื่อง หลักเกณฑ์และวิธีการพิจารณาแต่งตั้งบุคคลให้ดำรงตำแหน่งผู้ช่วยศาสตราจารย์ รองศาสตราจารย์ และศาสตราจารย์</p>
+                            <p>4. ภาะงานวิจัยคิดได้สูงสุด ร้อยละ 35 (270 ชั่วโมงภาระงาน) <span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 270 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="type === '3'" class="table-container"> <!-- ตารางภาระงานบริการวิชาการ -->
+                <div class="container sarabun-regular">
+                    <div class="container-title">
+                        <strong>3. ภาระงานบริการวิชาการ (คิดเป็นร้อยละ 20 ของภาระงานรวม)</strong>
+                        <div class="cancel-button cancel-position" (click)="deleteWorkload(i, type)">
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <tr class="header-row">
+                            <th style="width: 70%;">ภาระงาน</th>
+                            <th style="width: 20%;">ภายนอก/ภายใน</th>
+                            <th>ชั่วโมงภาระงาน</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown-wrapper">
+                                    <button type="button" #thirdDropdownCheck (click)="toggleDropdownByKey('thirdTypeDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                                        เพิ่มภาระงาน
+                                        <i class="fa-solid fa-caret-down" 
+                                            [ngClass]="{ 'rotate-up': thirdTypeDropdown, 'rotate-down': !thirdTypeDropdown }">
+                                        </i>
+                                    </button>
+                                    <ul *ngIf="thirdTypeDropdown" class="dropdown-menu">
+                                        <li (click)="selectType('3.1')">ภาระงานบริการวิชาการ</li>
+                                    </ul>
+                                </div> 
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <ng-container *ngFor="let workload of acadSvc let i = index" >
+                            <tr>
+                                <td>
+                                    <div class="container-title">
+                                        <ng-container *ngIf="workload.type == '3.1'">1.{{i + 1}} ภาระงานบริการวิชาการ</ng-container>
+                                        <div class="cancel-button" (click)="deleteThirdType(i)">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </div>
+                                    <textarea #textArea (input)="autoResize(textArea)" name="" id=""></textarea>
+                                </td>
+                                <td>
+                                    <select name="inOut{{i}}" id="" class="mx-auto">
+                                        <option value="">เลือก</option>
+                                        <option value="">ภายนอก</option>
+                                        <option value="">ภายใน</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" min="0" max="1000" [(ngModel)]="workload.workload_hour" name="third_workload{{i}}">
+                                </td>
+                            </tr>
+                        </ng-container>
+                        
+                        <tr class="fw-bold">
+                            <td colspan="2" class="text-center fw-bold">รวม</td>
+                            <td class="text-center">{{ third_totalHour }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="text-center">ชั่วโมงภาระงานที่น่าไปคิดเป็นภาระงานบริการวิชาการ<sup> 2</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('3', third_totalHour) | number:'1.0-0' }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 20 ÷ 150)<sup> 1</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('3', (third_totalHour)) * 20/150 | number:'1.0-0' }}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="note">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ร้อยละ 20 เท่ากับ 150 ชั่วโมงภาระงาน</p>
+                            <p>2. ภาะงานบริการวิชาการคิดได้สูงสุด ร้อยละ 20 (150 ชั่วโมงภาระงาน)<span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 150 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="type === '4'" class="table-container"> <!-- ตารางภาระงานวิจัยที่ได้ทุนจากนอกมหาลัย -->
+                <div class="container sarabun-regular">
+                    <div class="container-title">
+                        <strong>4. ภาระงานการวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย <span class="sarabun-regular">(คิดเป็นร้อยละ 10 ของภาระงานรวม โดยต้องได้รับการอนุมัติสนับสนุนงบประมาณจากแหล่งทุนภายนอกมหาวิทยาลัยอย่างน้อยคนละ 40,000 บาทขึ้นไป กรณีที่ได้รับการอนุมัติงบประมาณจากแหล่งทุนภายนอกมหาวิทยาลัยต่ำกว่า 40,000 บาทต่อคน ให้คิดตามสัดส่วนของร้อยละ 25)</span></strong>
+                        <div class="cancel-button cancel-position" (click)="deleteWorkload(i, type)">
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <tr class="header-row">
+                            <th style="width: 70%;">ภาระงาน</th>
+                            <th style="width: 20%;">จำนวนทุน</th>
+                            <th>ชั่วโมงภาระงาน</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="dropdown-wrapper">
+                                    <button type="button" #fourthDropdownCheck (click)="toggleDropdownByKey('fourthTypeDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                                        เพิ่มภาระงาน
+                                        <i class="fa-solid fa-caret-down" 
+                                            [ngClass]="{ 'rotate-up': fourthTypeDropdown, 'rotate-down': !fourthTypeDropdown }">
+                                        </i>
+                                    </button>
+                                    <ul *ngIf="fourthTypeDropdown" class="dropdown-menu">
+                                        <li (click)="selectType('4.1')">โครงการวิจัย</li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <ng-container *ngFor="let workload of research_ext let i = index" >
+                            <tr>
+                                <td>
+                                    <div class="container-title">
+                                        <ng-container *ngIf="workload.type == '4.1'">1.{{i + 1}} โครงการวิจัย เรื่อง</ng-container>
+                                        <div class="cancel-button" (click)="deleteFourthType(i)">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </div>
+                                    <textarea #textArea (input)="autoResize(textArea)" name="" id=""></textarea>
+                                </td>
+                                <td>
+                                    <input type="number" min="0" [(ngModel)]="workload.grant" name="grant{{i}}">
+                                </td>
+                                <td>
+                                    <input type="number" min="0" max="1000" [(ngModel)]="workload.workload_hour" name="fourth_workload{{i}}">
+                                </td>
+                            </tr>
+                        </ng-container>
+                        
+                        <tr class="fw-bold">
+                            <td colspan="2" class="text-center">รวม</td>
+                            <td class="text-center">{{ fourth_totalHour }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="text-center">ชั่วโมงภาระงานที่น่าไปคิดเป็นภาระงานการวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย<sup> 3</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('4', fourth_totalHour) | number:'1.0-0' }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 10 ÷ 80)<sup> 1</sup></td>
+                            <td class="text-center fw-bold">{{ checkTotal('4', (fourth_totalHour)) * 10/80 | number:'1.0-0' }}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="note">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ร้อยละ 10 เท่ากับ 80 ชั่วโมงภาระงาน</p>
+                            <p>2. โครงการวิจัยที่มีผู้ร่วมโครงการมากกว่า 1 คน ให้คิดตามสัดส่วนตามจริง โดยมีหลักฐานการแบ่งสัดส่วนชัดเจนใน โครงการวิจัย หรือหนังสือรับรองจากหัวหน้าโครงการ</p>
+                            <p>3. โครงการวิจัยที่ได้คร่อมมีงบประมาณ ให้คิดสัดส่วนตามจำนวนเดือน</p>
+                            <p>4. ภาะงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย ร้อยละ 10 (80 ชั่วโมงภาระงาน)<span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 80 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container sarabun-regular table-responsive"> <!-- ตารางสรุปภาระงาน -->
+            <div class="container-title">
+                <strong>ตารางสรุปภาระงาน ตั้งแต่วันที่ 1 ตุลาคม พ.ศ. {{ year }} ถึงวันที่ 30 กันยายน พ.ศ. {{ year+1 }}</strong>
+            </div>
+            
+            <table>
+                <tr class="header-row">
+                    <th rowspan="2" style="width: 40%;">สรุปภาระงาน</th>
+                    <th rowspan="2" style="width: 10;">ชั่วโมงภาระงานที่ทำจริง</th>
+                    <th rowspan="2" style="width: 10%;">ชั่วโมงภาระงานที่คำนวน</th>
+                    <th colspan="2" style="width: 30%;">ภาระงานทดแทน</th>
+                    <th rowspan="2" class="work-hours">สัดส่วนภาระงาน (%)</th>
+                </tr>
+                <tr class="header-row">
+                    <th>หมวดภาระงานที่นำมาทดแทน</th>
+                    <th>ชั่วโมงภาระงาน</th>
+                </tr>
+                
+                <!-- ภาระงานสอน -->
+                <tr>
+                    <td><span class="sarabun-bold">1. ภาระงานสอน</span></td>
+                    <td class="text-center">{{ first_totalHour }}</td>
+                    <td class="text-center">{{ checkTotal('1', first_totalHour) | number:'1.0-0' }}</td>
+                    <td class="select-items dropdown-wrapper">
+                        <button type="button" #firstSelect (click)="toggleDropdownByKey('firstSelectDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                            เลือกหมวดหมู่
+                            <i class="fa-solid fa-caret-down" 
+                                [ngClass]="{ 'rotate-up': firstSelectDropdown, 'rotate-down': !firstSelectDropdown }">
+                            </i>
+                        </button>
+                        <ul *ngIf="firstSelectDropdown" class="dropdown-menu select-option">
+                            <li *ngFor="let option of filterWorkloadOptions(1)" (click)="addFirstSelect(option.id); addReplaceType('1', option.id)">
+                                {{ option.label }}
+                            </li>
+                        </ul>
+                        <div class="select-item-wrapper" *ngFor="let id of firstSelected; let i = index">
+                            <div class="cancel-button replace-cancel-button" (click)="deleteFirstSelect(i); deleteReplaceType('1', id)">
+                                <i class="fa fa-times"></i>
+                            </div>
+                            <span class="replacement">{{ getLabelById(id) }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="270" 
+                        *ngIf="firstSelected.length > 0 ? true : null"
+                        [(ngModel)]="getReplaceHour('1').replace_hour" 
+                        (blur)="validateReplaceHour('1')" 
+                        name="first_replace">
+                    </td>
+                    <td class="text-center">{{ checkTotal('1', (first_totalHour + getReplaceHour('1').replace_hour)) * 35/270 | number:'1.0-0' }}</td>
+                </tr>
+                
+                <!-- ภาระงานวิจัย -->
+                <tr>
+                    <td><span class="sarabun-bold">2. ภาระงานวิจัย</span></td>
+                    <td class="text-center">{{ second_totalHour }}</td>
+                    <td class="text-center">{{ checkTotal('2', second_totalHour) | number:'1.0-0' }}</td>
+                    <td class="select-items dropdown-wrapper">
+                        <button type="button" #secondSelect (click)="toggleDropdownByKey('secondSelectDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                            เลือกหมวดหมู่
+                            <i class="fa-solid fa-caret-down" 
+                                [ngClass]="{ 'rotate-up': secondSelectDropdown, 'rotate-down': !secondSelectDropdown }">
+                            </i>
+                        </button>
+                        <ul *ngIf="secondSelectDropdown" class="dropdown-menu select-option">
+                            <li *ngFor="let option of filterWorkloadOptions(2)" (click)="addSecondSelect(option.id); addReplaceType('2', option.id)">
+                                {{ option.label }}
+                            </li>
+                        </ul>
+                        <div class="select-item-wrapper" *ngFor="let id of secondSelected; let i = index">
+                            <div class="cancel-button replace-cancel-button" (click)="deleteSecondSelect(i); deleteReplaceType('2', id)">
+                                <i class="fa fa-times"></i>
+                            </div>
+                            <span class="replacement">{{ getLabelById(id) }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="270" 
+                        *ngIf="secondSelected.length > 0 ? true : null"
+                        [(ngModel)]="getReplaceHour('2').replace_hour" 
+                        (blur)="validateReplaceHour('2')" 
+                        name="second_replace">
+                    </td>
+                    <td class="text-center">{{ checkTotal('2', (second_totalHour + getReplaceHour('2').replace_hour)) * 35/270 | number:'1.0-0' }}</td>
+                </tr>
+                
+                <!-- ภาระงานบริการวิชาการ -->
+                <tr>
+                    <td><span class="sarabun-bold">3. ภาระงานบริการวิชาการ</span></td>
+                    <td class="text-center">{{ third_totalHour }}</td>
+                    <td class="text-center">{{ checkTotal('3', third_totalHour) | number:'1.0-0' }}</td>
+                    <td class="select-items dropdown-wrapper">
+                        <button type="button" #thirdSelect (click)="toggleDropdownByKey('thirdSelectDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                            เลือกหมวดหมู่
+                            <i class="fa-solid fa-caret-down" 
+                                [ngClass]="{ 'rotate-up': thirdSelectDropdown, 'rotate-down': !thirdSelectDropdown }">
+                            </i>
+                        </button>
+                        <ul *ngIf="thirdSelectDropdown" class="dropdown-menu select-option">
+                            <li *ngFor="let option of filterWorkloadOptions(3)" (click)="addThirdSelect(option.id); addReplaceType('3', option.id)">
+                                {{ option.label }}
+                            </li>
+                        </ul>
+                        <div class="select-item-wrapper" *ngFor="let id of thirdSelected; let i = index">
+                            <div class="cancel-button replace-cancel-button" (click)="deleteThirdSelect(i); deleteReplaceType('3', id)">
+                                <i class="fa fa-times"></i>
+                            </div>
+                            <span class="replacement">{{ getLabelById(id) }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="150" 
+                        *ngIf="thirdSelected.length > 0 ? true : null" 
+                        [(ngModel)]="getReplaceHour('3').replace_hour" 
+                        (blur)="validateReplaceHour('3')" 
+                        name="third_replace">
+                    </td>
+                    <td class="text-center">{{ checkTotal('3', (third_totalHour + getReplaceHour('3').replace_hour)) * 20/150 | number:'1.0-0' }}</td>
+                </tr>
+                
+                <!-- ภาระงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย -->
+                <tr>
+                    <td><span class="sarabun-bold">4. ภาระงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย</span></td>
+                    <td class="text-center">{{ fourth_totalHour }}</td>
+                    <td class="text-center">{{ checkTotal('4', fourth_totalHour) }}</td>
+                    <td class="select-items dropdown-wrapper">
+                        <button type="button" #fourthSelect (click)="toggleDropdownByKey('fourthSelectDropdown')" class="dropdown-button select-type-btn sarabun-regular">
+                            เลือกหมวดหมู่
+                            <i class="fa-solid fa-caret-down" 
+                                [ngClass]="{ 'rotate-up': fourthSelectDropdown, 'rotate-down': !fourthSelectDropdown }">
+                            </i>
+                        </button>
+                        <ul *ngIf="fourthSelectDropdown" class="dropdown-menu select-option">
+                            <li *ngFor="let option of filterWorkloadOptions(4)" (click)="addFourthSelect(option.id); addReplaceType('4', option.id)">
+                                {{ option.label }}
+                            </li>
+                        </ul>
+                        <div class="select-item-wrapper" *ngFor="let id of fourthSelected; let i = index">
+                            <div class="replace-cancel-button cancel-button" (click)="deleteFourthSelect(i); deleteReplaceType('4', id)">
+                                <i class="fa fa-times"></i>
+                            </div>
+                            <span class="replacement">{{ getLabelById(id) }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="80" 
+                        *ngIf="fourthSelected.length > 0 ? true : null" 
+                        [(ngModel)]="getReplaceHour('4').replace_hour" 
+                        (blur)="validateReplaceHour('4')" 
+                        name="fourth_replace">
+                    </td>
+                    
+                    <td class="text-center">{{ checkTotal('4', (fourth_totalHour + getReplaceHour('4').replace_hour)) * 10/80 | number:'1.0-0' }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-center sarabun-bold"><span>รวมสัดส่วนภาระงานทั้งหมด (%)</span></td>
+                    <td class="text-center fw-bold">
+                        {{ 
+                            (   
+                                (checkTotal('1', (first_totalHour + getReplaceHour('1').replace_hour))  * 35/270)  + 
+                                (checkTotal('2', (second_totalHour + getReplaceHour('2').replace_hour)) * 35/270)  + 
+                                (checkTotal('3', (third_totalHour + getReplaceHour('3').replace_hour))  * 20/150)  + 
+                                (checkTotal('4', (fourth_totalHour + getReplaceHour('4').replace_hour)) * 10/80)
+                            )   
+                            | number:'1.0-0'
+                        }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="note-item">
+            <p>ผู้รับประเมินได้เห็นชอบการกำหนดภาระงานขั้นต่ำตามที่ระบุไว้ข้างต้นแล้ว จึงลงลายมือชื่อไว้เป็นหลักฐาน </p>
+        </div>
+        <div class="confirm-form">
+            <div>
+                <input name="confirm" id="confirm" type="checkbox" class="mx-2" (click)="toggle_confirmAct()">
+                <label for="confirm">ลงชื่อ<span *ngIf="confirm_active">{{ this.username }}</span> (ผู้รับประเมิน)</label>   
+            </div>
+            <div>
+                <p *ngIf="confirm_active">วันที่ {{ this.day }} เดือน {{ this.month }} ปี {{ this.year }}</p>
+            </div>
+            
+        </div>
+
+        <div class="btn-submit">
+            <button type="submit">ยืนยันการจัดทำแบบ ป-ว 01</button>
+        </div>
+
+    </form>
+</div>

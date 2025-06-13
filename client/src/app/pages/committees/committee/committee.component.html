@@ -1,0 +1,90 @@
+<div class="main-bg">
+    <!-- Header -->
+    <div class="header">
+        <!-- ช่องค้นหา -->
+        <form>
+            <div class="search-box">
+                <input type="text" name="" id="" placeholder="ชื่อบุคลากร" />
+
+                <select>
+                  <option value="">คณะ</option>
+                  <option value="">คณะทั้งหมด</option>
+                  <option value="">คณะวิศวกรรมศาสตร์</option> 
+                  <option value="">คณะศิลปศาสตร์</option>
+                </select>
+      
+                <select>
+                  <option value="">ตำแหน่ง</option>
+                  <option value="A">คณบดี</option>
+                  <option value="B">รองคณบดี</option>
+                </select>
+
+                <select name="status" id="status">
+                    <option value="">สถานะ</option>
+                    <option value="0">ยังไม่ลงชื่อ</option>
+                    <option value="1">ลงชื่อแล้ว</option>
+                    <option value="2">ยังไม่กรอกคะแนน</option>
+                    <option value="3">กรอกคะแนนแล้ว</option>
+                </select>
+      
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-magnifying-glass" style="padding-right: 6px"></i>ค้นหา
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ตาราง -->
+    <div class="table-responsive">
+        <table class="table-container ">
+            <thead>
+                <tr class="sarabun-regular" style="background-color: rgba(239, 178, 37, 0.3);">
+                    <th>ลำดับ</th>
+                    <th>ชื่ออาจารย์</th>
+                    <th>คณะ</th>
+                    <th>ตำแหน่ง</th>
+                    <th>แบบ ปว-01</th>
+                    <th>แบบ ปว-02</th>
+                    <th>แบบ ปว-03</th>
+                    <th>ลงชื่อเข้าร่วมการประเมิน</th>
+                    <th>การยื่นอุทธรณ์</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let teacher of pagedData" class="sarabun-regular">
+                    <td>{{ teacher.no }}</td>
+                    <td>{{ teacher.name }}</td>
+                    <td>{{ teacher.faculty }}</td>
+                    <td>{{ teacher.position }}</td>
+                    <td><a class="detail" style="cursor: pointer;">ปว-01</a></td>
+                    <td><a class="detail" style="cursor: pointer;">ปว-02</a></td>
+                    <td>
+                        <a href="NPU/committee/chairman-form" *ngIf="teacher.vote == 0" class="vote-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>กรอกคะแนน
+                        </a>
+                        <a *ngIf="teacher.vote != 0" class="true success">
+                            กรอกคะแนนแล้ว
+                        </a>
+                    </td>
+                    <td>
+                        <a href="NPU/committee/check" *ngIf="teacher.status == 0" class="false success"><i class="fa-solid fa-pencil"></i>ลงชื่อ</a>
+                        <span *ngIf="teacher.status != 0" class="true">ลงชื่อแล้ว</span>
+                    </td>
+                    <td>
+                        <span *ngIf="teacher.status == 0" class="true">ไม่มี</span>
+                        <a href="NPU/committee/check" *ngIf="teacher.status != 0" class="false success aleart">
+                            รายละเอียด
+                            <span class="notification-badge"></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pagination">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">ย้อนกลับ</button>
+        <span>หน้า {{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">ถัดไป</button>
+    </div>
+</div>

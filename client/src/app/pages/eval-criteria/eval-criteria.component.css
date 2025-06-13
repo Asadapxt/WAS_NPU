@@ -1,0 +1,128 @@
+.main-bg {
+  background-color: #fcfcfcfc;
+  height: 100%;
+  padding-bottom: 2rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background: linear-gradient(to right, #f5d76e, #ffe791);
+  color: #333;
+  padding: 20px;
+  margin-top: 30px;
+  text-align: center;
+  border: 1px solid #d4af37;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header h1 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 2.2em;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border-left: 1px solid #d4af37;
+  border-right: 1px solid #d4af37;
+  border-bottom: 1px solid #d4af37;
+  height: auto;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  color: #8b7500;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 16px;
+  font-size: 1.5em;
+}
+
+.criteria-list,
+.rating-levels {
+  list-style: none;
+  padding-left: 10px;
+  margin-top: 16px;
+}
+
+.criteria-list li,
+.rating-levels li {
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 25px;
+  line-height: 1.5;
+}
+
+.criteria-list li:before {
+  content: "•";
+  color: #d4af37;
+  font-size: 1.5em;
+  position: absolute;
+  left: 0;
+  top: -5px;
+}
+
+.criteria-detail {
+  font-weight: normal;
+  padding-left: 14px;
+}
+
+.rating-level-title {
+  font-weight: bold;
+  color: #8b7500;
+}
+
+.download-button {
+  display: inline-block;
+  background: #25a2ef;
+  color: #fffdfd;
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.download-button:hover {
+  background: #157fc2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.download-section {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #fffbeb;
+  border-radius: 10px;
+  border: 1px dashed #d4af37;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 15px;
+  color: #8b7500;
+  font-size: 0.9em;
+}
+
+.criteria-weight {
+  font-weight: bold;
+  color: #8b7500;
+}

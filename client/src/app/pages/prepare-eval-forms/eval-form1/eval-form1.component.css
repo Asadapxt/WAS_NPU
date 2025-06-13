@@ -1,0 +1,470 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  background-color: #f5dd94;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18rem 10px 10px;
+  width: 100%;
+  z-index: 1;
+}
+
+.main-content {
+  margin-top: 3rem;
+  padding: 20px;
+}
+
+strong {
+  font-size: 18px;
+}
+
+span {
+  padding-left: 10px;
+}
+
+p {
+  font-size: 18px;
+}
+
+.exameple-btn {
+  color: black;
+  padding: 6px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.1s;
+  border-radius: 10px;
+}
+
+.exameple-btn:hover {
+  background-color: #0077ff;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.exameple-btn i {
+  padding-right: 6px;
+}
+
+.pre-title {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.title-container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-detail {
+  display: flex;
+}
+
+.statement {
+  margin-top: 3rem;
+  margin-bottom: 10px;
+}
+
+.indent {
+  margin-left: 4.5rem;
+}
+
+.double-indent {
+  margin-left: 4.5rem;
+}
+
+.select-items {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 4px;
+  margin-top: -1px;
+  border: none;
+  border-top: 2px solid;
+}
+
+.select-item-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 5px 10px;
+}
+
+.replace-cancel-button {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 1;
+  width: auto;
+}
+
+.cancel-button i {
+  background-color: #ff0000;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.cancel-button i:hover {
+  background-color: #d60000;
+}
+
+.replacement {
+  background-color: #5a57ff;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Menu */
+.dropdown-button {
+  background-color: #dddddd;
+  color: rgb(0, 0, 0);
+  padding: 6px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.dropdown-button:hover {
+  background-color: #b3b3b3;
+  color: rgb(0, 0, 0);
+}
+
+.dropdown-button i {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.select-type-btn {
+  font-size: 16px;
+}
+
+.select-option {
+  margin-top: 2.5rem;
+}
+
+.rotate-up {
+  transform: rotate(180deg);
+}
+
+.rotate-down {
+  transform: rotate(0deg);
+}
+
+.dropdown-menu {
+  background-color: #f5dd94;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: block;
+  position: absolute;
+  animation: slideDown 0.3s ease forwards;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #1994D6;
+  color: white;
+  border-radius: 5px;
+  transition: .1s;
+}
+
+
+/* Table */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-title textarea {
+  max-width: 100%;
+}
+
+.container-title i {
+  background-color: #ff0000;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+
+.container-title i:hover {
+  background-color: #d60000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+td {
+  border: 2px solid black;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+td select {
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    margin: 0;
+}
+
+td input {
+  width: 100%;
+}
+
+td textarea {
+  width: 100%;
+  overflow: hidden;
+  /* resize: none; */
+}
+
+input[type="number"] {
+    text-align: center;
+}
+
+th {
+  border: 2px solid black;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.indent {
+  padding-left: 20px;
+}
+
+.note {
+  display: flex;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.note-item {
+  margin-bottom: 5px;
+}
+
+.note-item p {
+  padding-left: 6px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.header-row td {
+  font-weight: bold;
+}
+
+.work-hours {
+  min-width: 100px;
+}
+
+.confirm-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem; 
+  font-size: 18px;
+}
+
+.confirm-form input,
+.confirm-form label {
+    cursor: pointer;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  margin: 3rem;
+}
+
+.btn-submit button {
+  background-color: #5a57ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 16px;
+}
+
+.btn-submit button:hover {
+  background-color: #2b28b1;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  header {
+    padding: 10px 10px 10px 6rem;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+  }
+
+  table {
+    min-width: 1280px;
+  }
+
+  .table-responsive{
+    position: relative;
+  }
+
+  .cancel-position {
+    position: absolute;
+    right: -21rem;
+    font-size: 15px;
+  }
+
+  h5,
+  strong,
+  p,
+  .dropdown-button,
+  .confirm-form {
+    font-size: 16px;
+  }
+
+  .select-type-btn,
+  .note,
+  .note-item p {
+    font-size: 14px;
+  }
+
+  .superscript {
+    font-size: smaller;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 10px 10px 10px 6rem;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+  }
+
+  .title-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cancel-position {
+    right: -20rem;
+  }
+
+  th, td {
+    font-size: 14px;
+  }
+
+  table {
+    min-width: 1024px;
+  }
+
+  .indent {
+    margin-left: 2rem;
+  }
+
+  .double-indent {
+    margin-left: 2rem;
+  }
+
+}
+
+@media (max-width: 430px) {
+  header a {
+    text-align: center;
+    font-size: 13px;
+  }
+  
+  h5 {
+    font-size: 14px;
+  }
+
+  .main-content {
+    margin-top: 5rem;
+    padding: 8px;
+  }
+
+  .cancel-position {
+    right: -40rem;
+    font-size: 15px;
+  }
+
+  strong,
+  p,
+  th, td,
+  .dropdown-button,
+  .select-type-btn,
+  .note,
+  .note-item p,
+  .confirm-form {
+    font-size: 13px;
+  }
+
+  .superscript {
+    font-size: smaller;
+  }
+
+  .indent {
+    margin-left: 0px;
+  }
+
+  .double-indent {
+    margin-left: 10px;
+  }
+}

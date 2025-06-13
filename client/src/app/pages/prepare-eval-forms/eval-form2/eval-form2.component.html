@@ -1,0 +1,548 @@
+<header class="sarabun-regular">
+    <a (click)="examplePdf()" class="exameple-btn"><i class="fa-solid fa-file"></i>ตัวอย่างการเขียนแบบ ป-ว 02</a>
+    <a (click)="previewPdf()" class="exameple-btn"><i class="fa-solid fa-eye"></i>ดูตัวอย่างแบบ ป-ว 02 PDF</a>
+</header>
+
+<form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="title-container" *ngFor="let user of users">
+        <div class="pre-title sarabun-bold">
+            <h5>แบบ ป-ว 02</h5>
+        </div>
+
+        <div class="title sarabun-bold">
+            <h5>แบบรายงานผลการปฏิบัติราชการของพนักงานในมหาวิทยาลัยนครพนม ประเภทวิชาการ</h5>
+            <h5>ปีงบประมาณ .............</h5>
+            <h5>ตั้งแต่วันที่ 1 ตุลาคม พ.ศ. {{ this.year }} ถึงวันที่ 30 กันยายน พ.ศ. {{ this.year+1 }}</h5>
+        </div>
+
+        <div class="lecturer-title">
+            <div class="form-group sarabun-regular">
+                <label class="mb-3">
+                    <input type="radio" name="round" class="custom-radio" required>
+                    <span class="px-4">ครั้งที่ 1 (วันที่ 1 ตุลาคม {{ this.year }} ถึงวันที่ 31 มีนาคม {{ this.year+1 }})</span>
+                </label>
+                <label class="mb-3">
+                    <input type="radio" name="round" class="custom-radio" required>
+                    <span class="px-4">ครั้งที่ 2 (วันที่ 1 เมษายน {{ this.year }} ถึงวันที่ 30 กันยายน {{ this.year }})</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="sarabun-semibold user-detail">
+            <div class="mb-2">
+                <select name="" id="">
+                    <option value="">นาย</option>
+                    <option value="">นาง</option>
+                    <option value="">นางสาว</option>
+                </select>
+                <span class="mx-4">{{ user.name }}</span>
+            </div>
+            <div class="mb-2">
+                <span>ตำแหน่ง</span>
+                <span class="mx-4">{{ user.position }}</span>
+            </div>
+            <div class="mb-2">
+                <span>หลักสูตร {{ user.faculty }}บัณฑิต</span>
+                <span class="mx-2">สาขาวิชา {{ user.field_study }}</span>
+            </div>
+            <div class="mb-2">
+                <span>ภาควิชา.............................</span>
+            </div>
+            <div style="margin: 3rem auto;">
+                <div>
+                    <span>คณะ {{ user.faculty }}</span>
+                </div>
+                <span> มหาวิทยาลัยนครพนม</span>
+            </div>
+        </div>    
+    </div>
+
+    <div class="info-content sarabun-bold">
+        <div class="general-info">
+            <p>ส่วนที่ 1 ข้อมูลทั่วไป</p>
+            <p class="indent">1.1 ข้อมูลการลาในรอบการประเมิน</p>
+            <div class="double-indent">
+                <p>ขาดราชการ <input type="number" name="" id="" value="0"> วัน</p>
+                <p>มาปฏิบัติราชการสาย <input type="number" name="" id="" value="0"> วัน</p>
+                <p>ลาป่วย <input type="number" name="" id="" value="0"> วัน</p>
+                <p>ลากิจ <input type="number" name="" id="" value="0"> วัน</p>
+                <p>ลาพักผ่อน <input type="number" name="" id="" value="0"> วัน</p>
+            </div>
+        </div>
+        
+        <div class="award indent">
+            <span>1.2 ข้อมูลการได้รับรางวัล การยกย่องเชิดชู ในรอบการประเมิน</span>
+            <button type="button" (click)="addAward()" class="dropdown-button sarabun-regular">
+                <i class="fa-solid fa-plus"></i> เพิ่มข้อมูล
+            </button>
+        </div>
+        <div *ngFor="let item of awards; let i = index; trackBy: trackByIndex" class="award-detail">
+            <span style="padding-right: 16px;">{{i+1}}.</span>
+            <textarea class="award-input" type="" #textArea1 (input)="autoResize(textArea1)" [(ngModel)]="awards[i]" name="award{{i}} id="></textarea>
+            <div class="cancel-button replace-cancel-button" (click)="rm_Award(i)">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-content sarabun-bold">
+        <div class="general-info">
+            <p>ส่วนที่ 2 ข้อมูลภาระงานตามข้อตกลง (TOR)</p>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="table-container table-responsive"> <!-- ตารางภาระงานสอน -->
+            <div class="container sarabun-regular">
+                <div class="container-title">
+                    <strong>1. ภาระงานสอน (คิดเป็นร้อยละ 35 ของภาระงานรวม) ให้คิดภาระงานสอนเป็นปีการศึกษา</strong>
+                </div>
+                
+                <table>
+                    <tr class="header-row">
+                        <th rowspan="2" style="width: 40%;">ภาระงาน</th>
+                        <th rowspan="2" style="width: 20%;">ระดับการศึกษา</th>
+                        <th colspan="2">ชั่วโมงภาระงาน</th>
+                        <th rowspan="2" class="work-hours">ชั่วโมงภาระงาน<sup> 1</sup></th>
+                    </tr>
+                    <tr class="header-row">
+                        <th>บรรยาย</th>
+                        <th>ปฏิบัติการ<sup> 3</sup></th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr class="fw-bold">
+                        <td colspan="4" class="text-center fw-bold">รวม</td>
+                        <td class="text-center"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="4" class="text-center">ชั่วโมงภาระงานที่นำไปคิดเป็นงานสอน<sup> 4</sup></td>
+                        <td class="text-center fw-bold"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="4" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 35 ÷ 270)<sup> 2</sup></td>
+                        <td class="text-center fw-bold"></td>
+                    </tr>
+                </table>
+                
+                <div class="note">
+                    <div class="d-flex">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ชั่วโมงปฏิบัติการให้รวมทั้งการทดลองและปฏิบัติการจริง</p>
+                            <p>2. ภาระงานรวมร้อยละ 35 เท่ากับ 270 ชั่วโมงภาระงาน</p>
+                            <p>3. รายวิชาปฏิบัติการ/ทดลอง 1 หน่วยกิต โครงสร้างรายวิชาอาจเป็น 2 หรือ 3 ชั่วโมง/ให้คิดเป็น 3 ชั่วโมง</p>
+                            <p>4. ภาระงานสอนคิดได้สูงสุด ร้อยละ 35 (270 ชั่วโมงภาระงาน) <span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 270 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+                    <div class="file-upload">
+                        <label class="file-upload-label">
+                            เลือกไฟล์
+                            <input type="file" (change)="add_teachFile($event)" id="documents" name="documents" accept="application/pdf" required>
+                        </label>
+
+                        <div class="file-preview-container" *ngIf="teachFiles.length > 0">
+                            <div class="file-preview" *ngFor="let file of teachFiles; let i = index">
+                                <div class="file-name">{{ file.name }}</div>
+                                <div>
+                                    <button type="button" class="remove-btn" (click)="rm_teach(i)">✖</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color: red">* แนบเอกสารหลักฐาน</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container table-responsive"> <!-- ตารางภาระงานวิจัย -->
+                <div class="container sarabun-regular">
+                    <div class="container-title">
+                        <strong>2. ภาระงานวิจัย (คิดเป็นร้อยละ 35 ของภาระงานรวม)</strong>
+                    </div>
+                    
+                    <table>
+                        <tr class="header-row">
+                            <th style="width: 40%;">ภาระงาน</th>
+                            <th style="width: 20%;">บทบาท<sup> 2</sup></th>
+                            <th>ฐานข้อมูล<sup> 3</sup></th>
+                            <th>ชั่วโมงภาระงาน</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="fw-bold">
+                            <td colspan="3" class="text-center fw-bold">รวม</td>
+                            <td class="text-center"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="3" class="text-center">ชั่วโมงภาระงานที่นำไปคิดเป็นงานวิจัย<sup> 4</sup></td>
+                            <td class="text-center fw-bold"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="3" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 35 ÷ 270)<sup> 1</sup></td>
+                            <td class="text-center fw-bold"></td>
+                        </tr>
+                    </table>
+                    
+                    <div class="note">
+                        <div class="d-flex">
+                            <div class="note-item">
+                                <span class="fw-bold">หมายเหตุ</span>
+                            </div>
+                            <div class="note-item">
+                                <p>1. ร้อยละ 35 เท่ากับ 270 ชั่วโมงภาระงาน</p>
+                                <p>2. ผู้ประเมินต้องเป็นผู้ประพันธ์อันดับแรก (First Author) หรือผู้ประพันธ์บรรณกิจ (Corresponding Author) เท่านั้น</p>
+                                <p>3. ฐานข้อมูล หมายถึง ฐานข้อมูลการเผยแพร่ผลงานวิจัยตามเกณฑ์การขอกำหนดตำแหน่งทางวิชาการที่ ก.พ.อ. กำหนด ดังนั้น ผลงานวิจัยที่สามารถนำมาขอภาระงานวิจัยได้คือผลงานวิจัยที่ได้รับการเผยแพร่ ตามประกาศ ก.พ.อ. เรื่อง หลักเกณฑ์และวิธีการพิจารณาแต่งตั้งบุคคลให้ดำรงตำแหน่งผู้ช่วยศาสตราจารย์ รองศาสตราจารย์ และศาสตราจารย์</p>
+                                <p>4. ภาะงานวิจัยคิดได้สูงสุด ร้อยละ 35 (270 ชั่วโมงภาระงาน) <span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 270 ชั่วโมงภาระงาน</span></p>
+                            </div>
+                        </div>
+
+                        <div class="file-upload">
+                            <label class="file-upload-label">
+                                เลือกไฟล์
+                                <input type="file" (change)="add_researchFile($event)" id="documents" name="documents" accept="application/pdf" required>
+                            </label>
+
+                            <div class="file-preview-container" *ngIf="researchFiles.length > 0">
+                                <div class="file-preview" *ngFor="let file of researchFiles; let i = index">
+                                    <div class="file-name">{{ file.name }}</div>
+                                    <div>
+                                        <button type="button" class="remove-btn" (click)="rm_research(i)">✖</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="color: red">* แนบเอกสารหลักฐาน</p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div class="table-container table-responsive"> <!-- ตารางภาระงานบริการวิชาการ -->
+            <div class="container sarabun-regular">
+                <div class="container-title">
+                    <strong>3. ภาระงานบริการวิชาการ (คิดเป็นร้อยละ 20 ของภาระงานรวม)</strong>
+                </div>
+                
+                <table>
+                    <tr class="header-row">
+                        <th style="width: 70%;">ภาระงาน</th>
+                        <th style="width: 20%;">ภายนอก/ภายใน</th>
+                        <th>ชั่วโมงภาระงาน</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr class="fw-bold">
+                        <td colspan="2" class="text-center fw-bold">รวม</td>
+                        <td class="text-center"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2" class="text-center">ชั่วโมงภาระงานที่น่าไปคิดเป็นภาระงานบริการวิชาการ<sup> 2</sup></td>
+                        <td class="text-center fw-bold"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 20 ÷ 150)<sup> 1</sup></td>
+                        <td class="text-center fw-bold"></td>
+                    </tr>
+                </table>
+                
+                <div class="note">
+                    <div class="d-flex">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ร้อยละ 20 เท่ากับ 150 ชั่วโมงภาระงาน</p>
+                            <p>2. ภาะงานบริการวิชาการคิดได้สูงสุด ร้อยละ 20 (150 ชั่วโมงภาระงาน)<span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 150 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+
+                    <div class="file-upload">
+                        <label class="file-upload-label">
+                            เลือกไฟล์
+                            <input type="file" (change)="add_acadFile($event)" id="documents" name="documents" accept="application/pdf" required>
+                        </label>
+
+                        <div class="file-preview-container" *ngIf="acadSvcFiles.length > 0">
+                            <div class="file-preview" *ngFor="let file of acadSvcFiles; let i = index">
+                                <div class="file-name">{{ file.name }}</div>
+                                <div>
+                                    <button type="button" class="remove-btn" (click)="rm_acad(i)">✖</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color: red">* แนบเอกสารหลักฐาน</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container table-responsive"> <!-- ตารางภาระงานวิจัยที่ได้ทุนจากนอกมหาลัย -->
+            <div class="container sarabun-regular">
+                <div class="container-title">
+                    <strong>4. ภาระงานการวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย <span class="sarabun-regular">(คิดเป็นร้อยละ 10 ของภาระงานรวม โดยต้องได้รับการอนุมัติสนับสนุนงบประมาณจากแหล่งทุนภายนอกมหาวิทยาลัยอย่างน้อยคนละ 40,000 บาทขึ้นไป กรณีที่ได้รับการอนุมัติงบประมาณจากแหล่งทุนภายนอกมหาวิทยาลัยต่ำกว่า 40,000 บาทต่อคน ให้คิดตามสัดส่วนของร้อยละ 25)</span></strong>
+                </div>
+                
+                <table>
+                    <tr class="header-row">
+                        <th style="width: 70%;">ภาระงาน</th>
+                        <th style="width: 20%;">จำนวนทุน</th>
+                        <th>ชั่วโมงภาระงาน</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
+                    <tr class="fw-bold">
+                        <td colspan="2" class="text-center">รวม</td>
+                        <td class="text-center"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2" class="text-center">ชั่วโมงภาระงานที่น่าไปคิดเป็นภาระงานการวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย<sup> 3</sup></td>
+                        <td class="text-center fw-bold"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2" class="text-center">คิดเป็นร้อยละของภาระงาน (ผลรวมชั่วโมงภาระงาน x 10 ÷ 80)<sup> 1</sup></td>
+                        <td class="text-center fw-bold"></td>
+                    </tr>
+                </table>
+                
+                <div class="note">
+                    <div class="d-flex">
+                        <div class="note-item">
+                            <span class="fw-bold">หมายเหตุ</span>
+                        </div>
+                        <div class="note-item">
+                            <p>1. ร้อยละ 10 เท่ากับ 80 ชั่วโมงภาระงาน</p>
+                            <p>2. โครงการวิจัยที่มีผู้ร่วมโครงการมากกว่า 1 คน ให้คิดตามสัดส่วนตามจริง โดยมีหลักฐานการแบ่งสัดส่วนชัดเจนใน โครงการวิจัย หรือหนังสือรับรองจากหัวหน้าโครงการ</p>
+                            <p>3. โครงการวิจัยที่ได้คร่อมมีงบประมาณ ให้คิดสัดส่วนตามจำนวนเดือน</p>
+                            <p>4. ภาะงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย ร้อยละ 10 (80 ชั่วโมงภาระงาน)<span class="fw-bold">ส่วนที่เกินสามารถนำไปทดแทนส่วนอื่นได้ สูงสุด 80 ชั่วโมงภาระงาน</span></p>
+                        </div>
+                    </div>
+                    <div class="file-upload">
+                        <label class="file-upload-label">
+                            เลือกไฟล์
+                            <input type="file" (change)="add_research_extFile($event)" id="documents" name="documents" accept="application/pdf" required>
+                        </label>
+
+                        <div class="file-preview-container" *ngIf="research_extFiles.length > 0">
+                            <div class="file-preview" *ngFor="let file of research_extFiles; let i = index">
+                                <div class="file-name">{{ file.name }}</div>
+                                <div>
+                                    <button type="button" class="remove-btn" (click)="rm_researchExt(i)">✖</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color: red">* แนบเอกสารหลักฐาน</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container table-responsive"> <!-- ตารางสรุปภาระงาน -->
+            <div class="container sarabun-regular">
+                <div class="container-title">
+                    <strong>ตารางสรุปภาระงาน ตั้งแต่วันที่ 1 ตุลาคม พ.ศ. {{ year }} ถึงวันที่ 30 กันยายน พ.ศ. {{ year+1 }}</strong>
+                </div>
+                
+                <table>
+                    <tr class="header-row">
+                        <th rowspan="2" style="width: 40%;">สรุปภาระงาน</th>
+                        <th rowspan="2" style="width: 10;">ชั่วโมงภาระงานที่ทำจริง</th>
+                        <th rowspan="2" style="width: 10%;">ชั่วโมงภาระงานที่คำนวน</th>
+                        <th colspan="2" style="width: 30%;">ภาระงานทดแทน</th>
+                        <th rowspan="2" class="work-hours">สัดส่วนภาระงาน (%)</th>
+                    </tr>
+                    <tr class="header-row">
+                        <th>หมวดภาระงานที่นำมาทดแทน</th>
+                        <th>ชั่วโมงภาระงาน</th>
+                    </tr>
+                    
+                    <!-- ภาระงานสอน -->
+                    <tr>
+                        <td><span class="sarabun-bold">1. ภาระงานสอน</span></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="select-items dropdown-wrapper"></td>
+                        <td></td>
+                        <td class="text-center"></td>
+                    </tr>
+                    
+                    <!-- ภาระงานวิจัย -->
+                    <tr>
+                        <td><span class="sarabun-bold">2. ภาระงานวิจัย</span></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="select-items dropdown-wrapper"></td>
+                        <td></td>
+                        <td class="text-center"></td>
+                    </tr>
+                    
+                    <!-- ภาระงานบริการวิชาการ -->
+                    <tr>
+                        <td><span class="sarabun-bold">3. ภาระงานบริการวิชาการ</span></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="select-items dropdown-wrapper"></td>
+                        <td></td>
+                        <td class="text-center"></td>
+                    </tr>
+                    
+                    <!-- ภาระงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย -->
+                    <tr>
+                        <td><span class="sarabun-bold">4. ภาระงานวิจัยที่ได้รับการสนับสนุนจากแหล่งทุนภายนอกมหาวิทยาลัย</span></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="select-items dropdown-wrapper"></td>
+                        <td></td>
+                        <td class="text-center"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-center sarabun-bold"><span>รวมสัดส่วนภาระงานทั้งหมด (%)</span></td>
+                        <td class="text-center fw-bold">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="check-confirm sarabun-regular">
+        <input name="confirm" id="confirm" type="checkbox" class="mx-2" required>
+        <label for="confirm" style="color: red;">ข้าพเจ้าขอรับรองว่าข้อมูลข้างต้นเป็นความจริงทุกประการ *</label>
+    </div>
+
+    <div class="table-container table-responsive"> <!-- ตารางแผนพัฒนาตนเอง -->
+        <div class="container sarabun-regular">
+            <div class="container-title">
+                <strong>ส่วนที่ 3. แผนพัฒนาตนเอง</strong>
+            </div>
+            
+            <table>
+                <tr class="header-row">
+                    <th style="width: 40%;">ความรู้/ทักษะ/สมรรถนะที่ต้องได้รับการพัฒนา</th>
+                    <th style="width: 40%;">วิธีการพัฒนา</th>
+                    <th>ช่วงเวลาที่ต้องการพัฒนา</th>
+                </tr>
+                <tr>
+                    <td><textarea #textArea2 (input)="autoResize(textArea2)" name="" id=""></textarea></td>
+                    <td><textarea #textArea3 (input)="autoResize(textArea3)" name="" id=""></textarea></td>
+                    <td><textarea #textArea4 (input)="autoResize(textArea4)" name="" id=""></textarea></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="confirm-form">
+        <div>
+            <input name="confirm" id="signature" type="checkbox" class="mx-2" (click)="toggle_confirmAct()">
+        <label for="signature">ลงชื่อ <span *ngIf="confirm_active">{{ this.username }}</span> (ผู้รายงาน)</label>   
+        </div>
+        <div>
+            <p *ngIf="confirm_active">วันที่ {{ this.day }} เดือน {{ this.month }} ปี {{ this.year }}</p>
+        </div>   
+    </div>
+
+    <div class="title appendix sarabun-bold">
+        <h5>ภาคผนวก</h5>
+        <h5>ภาระงานการมีส่วนร่วมระดับหน่วยงานและมหาวิทยาลัย (ร้อยละ 10) </h5>
+        <h5>ให้สำเนาเอกสารหรือ QR code ในภาคผนวกเพื่อใช้ประกอบการพิจารณาของคณะกรรมการฯ</h5>
+    </div>
+
+    <div class="table-container table-responsive"> <!-- ตารางเกณฑ์คำนวนคะแนนภาคผนวก -->
+        <div class="container sarabun-regular">          
+            <table>
+                <tr class="header-row">
+                    <th style="width: 60%;">งาน</th>
+                    <th style="width: 40%;">เกณฑ์การคำนวณภาระงาน</th>
+                </tr>
+                <tr>
+                    <td><span>คำสั่งแต่งตั้งหรือได้รับมอบหมายจากมหาวิทยาลัย (ร้อยละ 5 โดยไม่สามารถทดแทนกันได้)</span></td>
+                    <td><span>จำนวน 5 ครั้ง ขึ้นไป 10 ชั่วโมงภาระงาน (ครั้งละ 1 %)</span></td>
+                </tr>
+                <tr>
+                    <td><span>คำสั่งแต่งตั้งหรือได้รับมอบหมายจากคณะ/วิทยาลัย (ร้อยละ 5 โดยไม่สามารถทดแทนกันได้)</span></td>
+                    <td><span>จำนวน 10 ครั้ง ขึ้นไป 10 ชั่วโมงภาระงาน (ครั้งละ 0.5 %)</span></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="info-content sarabun-bold">
+        <div class="award indent">
+            <span>1. คำสั่งแต่งตั้งหรือได้รับมอบหมายจากมหาวิทยาลัย (จำนวน 5 ครั้ง = 5%)</span>
+            <button type="button" (click)="addOrder_Univers()" class="dropdown-button sarabun-regular">
+                <i class="fa-solid fa-plus"></i> เพิ่มข้อมูล
+            </button>
+        </div>
+        <div *ngFor="let item of order_Univers; let i = index; trackBy: trackByIndex" class="award-detail">
+            <span style="padding-right: 16px;">{{i+1}}.</span>
+            <textarea class="award-input" type="" #textArea5 (input)="autoResize(textArea5)" [(ngModel)]="awards[i]" name="award{{i}} id="></textarea>
+            <div class="cancel-button replace-cancel-button" (click)="rm_OrderUnivers(i)">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-content sarabun-bold">
+        <div class="award indent">
+            <span>2. คำสั่งแต่งตั้งหรือได้รับมอบหมายจากคณะวิศวกรรมศาสตร์ (จำนวน 10 ครั้ง = 5%)</span>
+            <button type="button" (click)="addOrder_Faculty()" class="dropdown-button sarabun-regular">
+                <i class="fa-solid fa-plus"></i> เพิ่มข้อมูล
+            </button>
+        </div>
+        <div *ngFor="let item of order_Faculty; let i = index; trackBy: trackByIndex" class="award-detail">
+            <span style="padding-right: 16px;">{{i+1}}.</span>
+            <textarea class="award-input" type="" #textArea6 (input)="autoResize(textArea6)" [(ngModel)]="awards[i]" name="award{{i}} id="></textarea>
+            <div class="cancel-button replace-cancel-button" (click)="rm_OrderFaclty(i)">
+                <i class="fa fa-times"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-orderFile">
+        <label class="file-upload-label">
+            เลือกไฟล์
+            <input type="file" (change)="add_OrderFile($event)" id="documents" name="documents" accept="application/pdf" required>
+        </label>
+
+        <div class="order-container" *ngIf="order_files.length > 0">
+            <div class="file-preview" *ngFor="let file of order_files; let i = index">
+                <div class="order-fileName">{{ file.name }}</div>
+                <i class="fa-solid fa-xmark remove-btn cancel" (click)="rm_OrderFile(i)"></i>
+            </div>
+        </div>
+        <p class="note mb-5" style="color: red;">* อัปโหลดไฟล์เอกสารหลักฐาน (PDF)</p>
+    </div>
+    
+    <div class="btn-submit">
+        <button type="submit">ยืนยันการจัดทำแบบ ป-ว 02</button>
+    </div>
+</form>

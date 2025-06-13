@@ -1,0 +1,126 @@
+<button class="toggle-sidebar-btn" (click)="onToggleSidebar()" #toggleButton> ☰ เมนู </button>
+
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="bg-white border-end side-bar" [ngClass]="{ active: sidebarActive }" #sidebar>
+    <div class="d-flex justify-content-center"><img src="images/logoNpu.png" alt="" class="image" /></div>
+    <h4 class="text-center text-warning fw-bold sarabun-regular">Nakhon Phanom</h4>
+    <h4 class="text-center mb-4 fw-bold">University</h4>
+    <div class="underline border-bottom" style="margin-inline: 10px; width: calc(100% - 20px);"></div>
+    <ul class="list-unstyled">
+      <span class="text-secondary sarabun-regular px-4">Admin</span>
+      <li class="mb-2">
+        <a
+          routerLink="/NPU/admin"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-user-pen icon"></i>จัดการบุคลากร</a
+        >
+      </li>
+      <div class="underline border-bottom" style="margin-inline: 10px; width: calc(100% - 20px);"></div>
+      <li class="mt-3 mb-1">
+        <a
+          routerLink="/NPU/home"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-house icon"></i>หน้าหลัก</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/rank"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-ranking-star icon"></i>อันดับ</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/eval-criteria"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-clipboard-list icon"></i>เกณฑ์การประเมิน</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/eval-form-1"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-file-pen icon"></i>จัดทำแบบ ป-ว 01</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/eval-form-2"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-file-pen icon"></i>จัดทำแบบ ป-ว 02</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/eval-result"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-square-poll-horizontal icon"></i>แบบสรุปผล (ป-ว 03)</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/report-result"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-clipboard-check icon"></i>แจ้งผล (ป-ว 04)</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/appeal"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-clipboard-question icon"></i>ยื่นอุทธรณ์</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/eval-track"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-clipboard-check icon"></i>ติดตามผลการประเมิน</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/committee"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-users-line icon"></i>คณะกรรมการประเมิน</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="/NPU/p-info"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-user icon"></i>ข้อมูลส่วนตัว</a
+        >
+      </li>
+      <li class="mb-1">
+        <a
+          routerLink="#"
+          routerLinkActive="active"
+          class="d-block p-3 text-dark text-decoration-none rounded custom-hover"
+          ><i class="fa-solid fa-arrow-right-from-bracket icon"></i
+          >ออกจากระบบ</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-grow-1 main-content" id="mainContent">
+    <router-outlet></router-outlet>
+  </div>
+</div>

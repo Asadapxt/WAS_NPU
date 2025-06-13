@@ -1,0 +1,175 @@
+<div class="main-bg">
+    <!-- Header -->
+    <div class="header">
+        <!-- ช่องค้นหา -->
+        <form (ngSubmit)="search()" #searchForm="ngForm">
+            <div class="search-box">
+                <input [(ngModel)]="searchName" type="text" name="name" id="" placeholder="ชื่อบุคลากร" />
+
+                <div class="custom-dropdown select" #fac_search (click)="toggleFacSearch_dd()" tabindex="0">
+                    <div class="selected-option">
+                        {{ searchFaculty ? 'คณะ' + searchFaculty : 'คณะทั้งหมด' }}
+                    </div>
+                    <ul class="options" *ngIf="facSearch_dd">
+                        <li (click)="selectSearchFaculty('', $event)"
+                            [class.active]="!searchFaculty">
+                            คณะทั้งหมด
+                        </li>
+                        <li *ngFor="let faculty of facultyOptions"
+                            (click)="selectSearchFaculty(faculty, $event)"
+                            [class.active]="searchFaculty === faculty">
+                            คณะ{{ faculty }}
+                        </li>
+                    </ul>
+                </div>
+      
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-magnifying-glass" style="padding-right: 6px"></i>ค้นหา
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ตาราง -->
+    <div class="table-responsive">
+        <table class="table-container" *ngIf="users.length > 0">
+            <thead>
+                <tr class="sarabun-regular" style="background-color: rgba(239, 178, 37, 0.3);">
+                    <th>ลำดับ</th>
+                    <th>ชื่ออาจารย์</th>
+                    <th>คณะ</th>
+                    <th>ตำแหน่ง/ระดับ</th>
+                    <th>ตำแหน่งบริหาร</th>
+                    <th>บทบาท</th>
+                    <th>จัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users let i = index" class="sarabun-regular">
+                    <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.faculty }}</td>
+                    <td>{{ user.position }}</td>
+                    <td>{{ user.position_work }}</td>
+                    <td>
+                        <ng-container *ngIf="user.role === 'chairman'">ประธาณคณะกรรมการ</ng-container>
+                        <ng-container *ngIf="user.role === 'secretary'">เลขาณุการ</ng-container>
+                        <ng-container *ngIf="user.role === 'committee'">คณะกรรมการ</ng-container>
+                        <ng-container *ngIf="user.role === 'user'">อาจารย์</ng-container>
+                    </td>
+                    <td>
+                        <a class="more-info" style="cursor: pointer;" (click)="openEditModal(user)">
+                            <i class="fa-solid fa-pen-to-square hide-icon"></i>แก้ไข
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table-container" *ngIf="users.length == 0">
+            <thead>
+                <tr class="sarabun-regular" style="background-color: rgba(239, 178, 37, 0.3);">
+                    <th>ลำดับ</th>
+                    <th>ชื่ออาจารย์</th>
+                    <th>คณะ</th>
+                    <th>ตำแหน่ง/ระดับ</th>
+                    <th>ตำแหน่งบริหาร</th>
+                    <th>บทบาท</th>
+                    <th>จัดการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="sarabun-regular">
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pagination">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">ย้อนกลับ</button>
+        <span>หน้า {{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">ถัดไป</button>
+    </div>
+</div>
+
+<!-- ฟอร์มแก้ไขข้อมูล -->
+<div class="modal" tabindex="-1" *ngIf="showModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <h5 class="text-center sarabun-bold mb-4" style="font-size: 30px; color: #EFB225;">แก้ไขข้อมูล</h5>
+
+            <div class="modal-body sarabun-bold">
+                <form>
+                    <div class="mb-4" style="color: #8B7500;">
+                        <label class="mb-2">ชื่อ</label>
+                        <input [(ngModel)]="selectedUser.name" name="name" class="form-control" />
+                    </div>
+                    <div class="mb-4" style="color: #8B7500;">
+                        <label class="mb-2">คณะ</label>
+                        <div class="custom-dropdown" #fac_edit (click)="toggleFac_dd()" tabindex="0">
+                            <div class="selected-option">
+                                {{ selectedUser.faculty || 'เลือกคณะ' }}
+                            </div>
+                            <ul class="options" *ngIf="fac_dd">
+                                <li
+                                    *ngFor="let faculty of facultyOptions"
+                                    (click)="selectFaculty(faculty, $event)"
+                                    [class.active]="selectedUser.faculty === faculty"
+                                >
+                                    {{ faculty }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-4" style="color: #8B7500;">
+                        <label class="mb-2">ตำแหน่ง/ระดับ</label>
+                        <select [(ngModel)]="selectedUser.position" id="position" name="position" class="form-control">
+                            <option value="ศาสตราจารย์">ศาสตราจารย์</option>
+                            <option value="รองศาสตราจารย์">รองศาสตราจารย์</option>
+                            <option value="ผู้ช่วยศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
+                            <option value="อาจารย์">อาจารย์</option>
+                        </select>
+                    </div>
+                    <div class="mb-4" style="color: #8B7500;">
+                        <label class="mb-2">ตำแหน่งบริหาร</label>
+                        <div class="custom-dropdown" #pw_edit (click)="togglePw_dd()" tabindex="0">
+                            <div class="selected-option">
+                                {{ selectedUser.position_work || 'เลือกตำแหน่ง' }}
+                            </div>
+                            <ul class="options" *ngIf="pw_dd">
+                                <li
+                                    *ngFor="let pw of positionWorkOptions"
+                                    (click)="selectPositionWork(pw, $event)"
+                                    [class.active]="selectedUser.position_work === pw"
+                                >
+                                    {{ pw }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-4" style="color: #8B7500;">
+                        <label class="mb-2">บทบาท</label>
+                        <select [(ngModel)]="selectedUser.role" id="role" name="role" class="form-control">
+                            <option value="chairman">ประธาณคณะกรรมการ</option>
+                            <option value="secretary">เลขาณุการ</option>
+                            <option value="committee">คณะกรรมการ</option>
+                            <option value="user">อาจารย์</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" (click)="closeModal()">ยกเลิก</button>
+                        <button type="button" class="btn btn-primary" (click)="openComfirm()">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

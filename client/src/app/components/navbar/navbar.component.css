@@ -1,0 +1,141 @@
+.main-content {
+  padding-left: 260px;
+  overflow-x: hidden;
+}
+
+.toggle-sidebar-btn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  background-color: #ffc927;
+  color: #000;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  display: block;
+  opacity: 0;
+  animation: fadeSlideIn 0.3s ease-out forwards;
+  transition: transform 0.3s ease-in-out;
+}
+
+.toggle-sidebar-btn:hover {
+  background-color: #dbae25;
+  transform: scale(1.05);
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.side-bar {
+  width: 260px;
+  padding: 10px 10px 10px 0;
+  position: fixed;
+  top: 0;
+  max-width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.image {
+  width: 75px;
+  height: 110px;
+}
+
+.custom-hover {
+  position: relative;
+  padding: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  transition: padding-left 0.3s ease, background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.custom-hover:hover,
+.custom-hover.active {
+  background-color: #efb225;
+  color: white !important;
+  padding-left: 16px;
+  margin-right: 12px;
+  transform: translateX(10px);
+}
+
+.custom-hover:before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 0;
+  background-color: #e69500;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.custom-hover:hover:before,
+.custom-hover.active:before {
+  height: 70%;
+  opacity: 1;
+}
+
+.icon {
+  padding-right: 12px;
+}
+
+.toggle-sidebar-btn {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .toggle-sidebar-btn {
+    display: block;
+  }
+
+  .side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background-color: white;
+    z-index: 2;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .side-bar.active {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    transition: margin-left 0.3s ease;
+    padding-left: 0;
+  }
+
+  .custom-hover {
+    font-size: 14px;
+    padding: 8px;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  .custom-hover:before {
+    left: -10px;
+  }
+
+  .toggle-sidebar-btn {
+    display: block;
+  }
+}
