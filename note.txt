@@ -29,3 +29,5 @@
 
 #ทำต่อ
     อัปเดต register_status ของ user เมื่อกรอกข้อมูลที่จำเป็นในหน้า /register
+    
+    ทำ JWT token

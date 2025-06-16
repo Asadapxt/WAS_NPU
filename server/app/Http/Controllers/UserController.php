@@ -12,11 +12,12 @@ class UserController extends Controller
         // รายชื่อฟิลด์ที่อนุญาตให้สร้าง (ต้องตรงกับ fillable)
         $data = $request->only([
             'name',
+            'master_id',
             'email',
-            'address',
+            // 'address',
             'faculty',
             'field_study',
-            'phone_number',
+            // 'phone_number',
             'position',
             'position_work',
             'register_status',
@@ -45,6 +46,21 @@ class UserController extends Controller
         ]);
     }
 
+    public function getSSOUser(Request $request)
+    {
+        if (!$request->has('sso_user')) {
+            return response()->json([
+                'message' => 'Unauthorized. No SSO user info found.'
+            ], 401);
+        }
+
+        $ssoUser = $request->input('sso_user');
+
+        return response()->json([
+            'sso_user' => $ssoUser
+        ]);
+    }
+
     public function getUserById($id)
     {
         // ดึงข้อมูลผู้ใช้ตาม ID
@@ -67,7 +83,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
@@ -92,6 +108,36 @@ class UserController extends Controller
         return response()->json([
             'message' => 'อัปเดตข้อมูลเรียบร้อยแล้ว',
             'data' => $user
+        ]);
+    }
+
+    public function filterUser(Request $request)
+    {
+        $query = User::query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'LIKE', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('faculty')) {
+            $query->where('faculty', $request->faculty);
+        }
+
+        return response()->json($query->get());
+    }
+
+    public function checkMasterId(Request $request)
+    {
+        $masterId = $request->input('master_id');
+
+        if (!$masterId) {
+            return response()->json(['exists' => false, 'message' => 'No master_id provided'], 400);
+        }
+
+        $exists = User::where('master_id', $masterId)->exists();
+
+        return response()->json([
+            'exists' => $exists
         ]);
     }
 }

@@ -6,7 +6,9 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (token) {
     return true;
-  } else {
+  } 
+  else 
+  {
     const redirectUri = encodeURIComponent(window.location.origin + '/callback');
     const loginUrl = `https://main-auth.extremesofts.com/auth/login/redirect?redirect_uri=${redirectUri}`;
     window.location.href = loginUrl;

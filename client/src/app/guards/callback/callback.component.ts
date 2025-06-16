@@ -20,31 +20,39 @@ export class CallbackComponent {
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
+    console.log('token:', token);
+    
+
     if (token) {
       this.auth.setToken(token);
 
-      // เรียก API users
-      this.userService.getUsers().subscribe({
-        next: (userData) => {
-          const status = userData?.register_status;
-          
-          if (status === 1) {
-            this.router.navigate(['/NPU/home']);
-          } 
-          else {
-            this.router.navigate(['/register']);
-          }
+      this.userService.getSSOUser().subscribe({
+        next: (res) => {
+          const userData = res.sso_user.data.user;
+          console.log(userData);
+
+          // ตรวจสอบ master_id ว่ามีในฐานข้อมูลไหม
+          this.userService.checkMasterId(userData.id).subscribe({
+            next: (res) => {
+              if (!res.exists) {
+                console.log('ยังไม่มี master_id นี้ในระบบ', res.exists);
+                this.router.navigate(['/register']);
+              } 
+              else 
+              {
+                console.log('มี master_id นี้แล้ว');
+                this.router.navigate(['/NPU/home']);
+              }
+            },
+            error: (err) => {
+              console.error('เกิดข้อผิดพลาดในการเช็ค master_id:', err);
+            }
+          });
         },
         error: (err) => {
-          console.error('เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ใช้', err);
-          alert('ไม่สามารถโหลดข้อมูลผู้ใช้');
-          this.router.navigate(['/']);
+          console.error('โหลดข้อมูล SSO ไม่สำเร็จ:', err);
         }
       });
-    } 
-    else {
-      alert('ไม่พบ token');
-      this.router.navigate(['/']);
     }
   }
 

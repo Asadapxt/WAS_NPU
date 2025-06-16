@@ -30,13 +30,13 @@
                 <div class="input-wrapper" #field (click)="toggleField_dd()" tabindex="0">
                     <i class="fas fa-book-open"></i>
                     <div class="selected-option">
-                        {{ selectedUser.field  || 'เลือกสาขา' }}
+                        {{ selectedUser.field_study  || 'เลือกสาขา' }}
                     </div>
                     <ul class="options" *ngIf="field_dd">
                         <li
                             *ngFor="let field of filteredFields"
                             (click)="selectField(field, $event)"
-                            [class.active]="selectedUser.field === field"
+                            [class.active]="selectedUser.field_study === field"
                         >
                             {{ field }}
                         </li>

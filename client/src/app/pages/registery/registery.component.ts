@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/users/user.service';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-registery',
@@ -15,13 +16,44 @@ export class RegisteryComponent {
   constructor(
     private titleService: Title, 
     private userService: UserService,
+    private router: Router
   ) { this.titleService.setTitle("กรอกข้อมูลที่จำเป็น"); }
 
+  ngOnInit() {
+
+    this.userService.getUsers().subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+
+    this.userService.getSSOUser().subscribe({
+      next: (res) => {
+        console.log(res); // ผลลัพธ์จาก API
+
+        this.selectedUser.master_id = res.sso_user.data.user.id;
+        this.selectedUser.name = res.sso_user.data.user.name;
+        this.selectedUser.email = res.sso_user.data.user.email;
+        
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });   
+  }
+
   selectedUser = {
+    master_id: '',
+    name: '',
+    email: '',
     faculty: '',
-    field: '',
+    field_study: '',
     position: '',
-    position_work: ''
+    position_work: '',
+    register_status: 1
   };
 
   get filteredFields(): string[] {
@@ -58,20 +90,20 @@ export class RegisteryComponent {
   selectFaculty(faculty: string, event: Event) {
     event.stopPropagation();
     this.selectedUser.faculty = faculty;
-    this.selectedUser.field = '';
+    this.selectedUser.field_study = '';
     this.fac_dd = false;
   }
 
   selectField(field: string, event: Event) {
     event.stopPropagation();
-    this.selectedUser.field = field;
+    this.selectedUser.field_study = field;
     this.field_dd = false;
   }
 
   selectPosition(pos: string, event: Event) {
     event.stopPropagation();
     this.selectedUser.position = pos;
-    this.position_dd = false;
+    this.position_dd = false; 
   }
 
   selectPositionWork(posw: string, event: Event) {
@@ -267,30 +299,42 @@ export class RegisteryComponent {
   facultyOptions: string[] = Object.keys(this.facultyMap);
 
   onSubmit() {
-    Swal.fire({
-      title: 'คุณแน่ใจหรือไม่?',
-      text: "ต้องการแก้ไขข้อมูลหรือไม่",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'บันทึก',
-      cancelButtonText: 'ยกเลิก',
-      reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-          this.userService.updateUser(this.setStatus).subscribe({
-            next: (res) => {
-              Swal.fire(
-                'บันทึกแล้ว!',
-                'บันทึกข้อมูลเรียบร้อย',
-                'success'
-              ).then(() => {
-                window.location.reload();
-              });
-            },
-          });
-        }
+    if(this.selectedUser.faculty === '' || this.selectedUser.field_study === '' || this.selectedUser.position === '' || this.selectedUser.position_work === ''){
+      Swal.fire({
+        icon: 'error',
+        title: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+        text: 'กรุณาเลือกคณะ สาขาวิชา ตำแหน่ง และตำแหน่งงาน',
       });
+      return;
+    }
+    else {
+      Swal.fire({
+        title: 'คุณแน่ใจหรือไม่?',
+        text: "ต้องการแก้ไขข้อมูลหรือไม่",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'บันทึก',
+        cancelButtonText: 'ยกเลิก',
+        reverseButtons: true
+      }).then((result) => {
+          if (result.isConfirmed) {
+            console.log(this.selectedUser);
+            this.userService.createUser(this.selectedUser).subscribe({
+              next: (res) => {
+                Swal.fire(
+                  'บันทึกแล้ว!',
+                  'บันทึกข้อมูลเรียบร้อย',
+                  'success'
+                ).then(() => {
+                  this.router.navigate(['/NPU/home']);
+                });
+              },
+            });
+          }
+        });
+    }
+    
   }
 }
