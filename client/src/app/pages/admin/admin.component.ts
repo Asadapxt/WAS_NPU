@@ -66,7 +66,7 @@ export class AdminComponent {
       next: (data) => (this.users = data),
       error: (err) => console.error(err),
     });
-    console.log(`Searching for name: ${this.searchName}, faculty: ${this.searchFaculty}`);
+    // console.log(`Searching for name: ${this.searchName}, faculty: ${this.searchFaculty}`);
     
   }
 
@@ -124,17 +124,17 @@ export class AdminComponent {
 
   toggleFac_dd() {
     this.fac_dd = !this.fac_dd;
-    console.log(this.fac_dd);
+    // console.log(this.fac_dd);
   }
 
   toggleFacSearch_dd() {
     this.facSearch_dd = !this.facSearch_dd;
-    console.log(this.facSearch_dd);
+    // console.log(this.facSearch_dd);
   }
 
   togglePw_dd() {
     this.pw_dd = !this.pw_dd;
-    console.log(this.pw_dd);
+    // console.log(this.pw_dd);
   }
 
   selectFaculty(faculty: string, event: Event) {
@@ -182,8 +182,6 @@ export class AdminComponent {
   openEditModal(user: any) {
     this.selectedUser = { ...user };
     this.showModal = true;
-    console.log(this.selectedUser);
-    console.log(this.users);
   }
 
   closeModal() {

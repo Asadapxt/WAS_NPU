@@ -87,7 +87,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // รายชื่อฟิลด์ที่อนุญาตให้อัปเดต (ต้องตรงกับ fillable)
         $data = $request->only([
             'name',
             'email',
