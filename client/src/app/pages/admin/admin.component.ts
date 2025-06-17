@@ -23,7 +23,7 @@ export class AdminComponent {
 
   ngOnInit() {
     this.updatePagedData();
-    this.userService.getUsers().subscribe({
+    this.userService.listUsers().subscribe({
       next: (data) => this.users = data.users,
       error: (err) => console.error(err),
     });

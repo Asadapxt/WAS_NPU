@@ -8,12 +8,13 @@ use App\Models\User;
 
 // Route::get('/sso-user', function (Request $request) {
 //     return $request->user();
-// })->middleware('auth:sanctum');
+// })->middleware('sso.auth');
 
 
 Route::middleware('sso.auth')->group(function () {
     Route::post('/user', [UserController::class, 'addUser']);
-    Route::get('/users', [UserController::class, 'getUsers']);
+    Route::get('/user', [UserController::class, 'currentUser']);
+    Route::get('/users', [UserController::class, 'listUsers']);
     Route::get('/sso-user', [UserController::class, 'getSSOUser']);
 
     Route::get('/users/{id}', [UserController::class, 'getUserById']);

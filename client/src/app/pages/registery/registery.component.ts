@@ -21,9 +21,19 @@ export class RegisteryComponent {
 
   ngOnInit() {
 
-    this.userService.getUsers().subscribe({
+    this.userService.currentUser().subscribe({
       next: (res) => {
-        console.log(res);
+        if(Number(res.user.register_status) === 1) {
+          this.register_status = 1;
+          Swal.fire({
+            icon: 'info',
+            title: 'คุณได้ลงทะเบียนแล้ว',
+            text: 'คุณได้ลงทะเบียนเรียบร้อยแล้ว',
+          }).then(() => {
+            this.router.navigate(['/NPU/home']);
+          });
+        }
+        
       },
       error: (err) => {
         console.error(err);
@@ -32,8 +42,6 @@ export class RegisteryComponent {
 
     this.userService.getSSOUser().subscribe({
       next: (res) => {
-        console.log(res); // ผลลัพธ์จาก API
-
         this.selectedUser.master_id = res.sso_user.data.user.id;
         this.selectedUser.name = res.sso_user.data.user.name;
         this.selectedUser.email = res.sso_user.data.user.email;
@@ -64,11 +72,10 @@ export class RegisteryComponent {
   field_dd = false;
   position_dd = false;
   positionWork_dd = false;
-  setStatus = 1;
+  register_status = 0;
 
   toggleFac_dd() {
     this.fac_dd = !this.fac_dd;
-    console.log(this.fac_dd);
   }
   
   toggleField_dd() {
@@ -79,12 +86,10 @@ export class RegisteryComponent {
 
   togglePostion_dd() {
     this.position_dd = !this.position_dd;
-    console.log(this.position_dd);
   }
 
   togglePositionWork_dd() {
     this.positionWork_dd = !this.positionWork_dd;
-    console.log(this.positionWork_dd);
   }
 
   selectFaculty(faculty: string, event: Event) {
@@ -319,8 +324,17 @@ export class RegisteryComponent {
         cancelButtonText: 'ยกเลิก',
         reverseButtons: true
       }).then((result) => {
-          if (result.isConfirmed) {
-            console.log(this.selectedUser);
+          if(this.register_status === 1) {
+            Swal.fire({
+              icon: 'info',
+              title: 'คุณได้ลงทะเบียนแล้ว',
+              text: 'คุณได้ลงทะเบียนเรียบร้อยแล้ว',
+            }).then(() => {
+              this.router.navigate(['/NPU/home']);
+            });
+          }
+          else if (result.isConfirmed) {
+            // console.log(this.selectedUser);
             this.userService.createUser(this.selectedUser).subscribe({
               next: (res) => {
                 Swal.fire(

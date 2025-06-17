@@ -15,15 +15,15 @@ import { ChairmanFormComponent } from './pages/committees/chairman-form/chairman
 import { EvalForm1Component } from './pages/prepare-eval-forms/eval-form1/eval-form1.component';
 import { EvalForm2Component } from './pages/prepare-eval-forms/eval-form2/eval-form2.component';
 import { RegisteryComponent } from './pages/registery/registery.component';
-import { authGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth/auth.guard';
 import { CallbackComponent } from './guards/callback/callback.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'register', pathMatch: 'full' },
-    { path: 'register', component:RegisteryComponent },
+    { path: 'register',canActivate: [authGuard], component:RegisteryComponent },
     { path: 'callback', component:CallbackComponent },
     {
-        path: 'NPU', component: NavbarComponent, canActivate: [authGuard], children: [
+        path: 'NPU', canActivate: [authGuard], component: NavbarComponent, children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'admin', component:AdminComponent },
             { path: 'home', component:HomeComponent },

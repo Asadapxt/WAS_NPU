@@ -20,7 +20,16 @@ export class UserService {
     return this.http.post<any>(`${this.apiUrl}/user`, user, { headers });
   }
 
-  getUsers(): Observable<any> {
+  currentUser(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<any>(`${this.apiUrl}/user`, { headers });
+  }
+
+  listUsers(): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

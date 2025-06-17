@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
@@ -14,10 +15,8 @@ class UserController extends Controller
             'name',
             'master_id',
             'email',
-            // 'address',
             'faculty',
             'field_study',
-            // 'phone_number',
             'position',
             'position_work',
             'register_status',
@@ -28,21 +27,36 @@ class UserController extends Controller
 
         // สร้างผู้ใช้ใหม่
         $user = User::create($data);
+        if (!$user) {
+            return response()->json(['message' => 'ไม่สามารถเพิ่มผู้ใช้ได้',], 500);
+        }
 
         return response()->json([
             'message' => 'เพิ่มผู้ใช้เรียบร้อยแล้ว',
-            'data' => $user
+            'data' => $user,
         ]);
     }
 
-    public function getUsers(Request $request)
+    public function currentUser(Request $request)
+    {
+        $ssoUser = $request->get('sso_user');
+
+        $master_id = $ssoUser['data']['user']['id'];
+        if(!$master_id) return response()->json(['message' => 'ไม่พบผู้ใช้',], 404);
+
+        $user = User::where('master_id', $master_id)->first();
+
+        return response()->json(['user' => $user,]);
+    }
+
+    public function listUsers(Request $request)
     {
         // ดึงข้อมูลผู้ใช้ทั้งหมด
         $users = User::all();
 
         return response()->json([
             'users' => $users,
-            'sso_user' => $request->sso_user
+            // 'sso_user' => $request->sso_user
         ]);
     }
 
@@ -63,7 +77,6 @@ class UserController extends Controller
 
     public function getUserById($id)
     {
-        // ดึงข้อมูลผู้ใช้ตาม ID
         $user = User::findOrFail($id);
 
         return response()->json($user);
@@ -71,10 +84,7 @@ class UserController extends Controller
 
     public function deleteUser($id)
     {
-        // ค้นหาผู้ใช้ตาม ID
         $user = User::findOrFail($id);
-
-        // ลบผู้ใช้
         $user->delete();
 
         return response()->json([
