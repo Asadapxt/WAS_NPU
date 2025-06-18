@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
+import { UserService } from '../../../services/users/user.service';
 
 @Component({
   selector: 'app-committee',
@@ -11,13 +12,19 @@ import Swal from 'sweetalert2';
   styleUrl: './committee.component.css'
 })
 export class CommitteeComponent {
-  constructor(private titleService: Title) {
+  constructor(private titleService: Title, private userService: UserService) {
     this.titleService.setTitle("คณะกรรมการประเมิน");
   }
 
   ngOnInit() {
     this.updatePagedData();
-    
+
+    this.userService.currentUser().subscribe({
+      next: (res) => {
+        // console.log('role', res.user.role);
+        this.role = res.user.role;
+      }
+    })
   }
 
   // ข้อมูล
@@ -27,6 +34,8 @@ export class CommitteeComponent {
     { no: 3, name: 'ผศ.ดร.สุดา ศรีสุข', faculty: 'ครุศาสตร์', position: 'รองคณบดี', status: 1, vote: 1, File1_path: '', File2_path: ''},
     { no: 3, name: 'ผศ.ดร.สุดา ศรีสุข', faculty: 'ครุศาสตร์', position: 'อาจารย์', status: 1, vote: 1, File1_path: '', File2_path: ''},
   ];
+
+  role: string = '';
   
   // เปลี่ยนหน้าตาราง
   pagedData: any[] = [];

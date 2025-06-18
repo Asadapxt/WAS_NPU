@@ -8,8 +8,8 @@
     <h4 class="text-center mb-4 fw-bold">University</h4>
     <div class="underline border-bottom" style="margin-inline: 10px; width: calc(100% - 20px);"></div>
     <ul class="list-unstyled">
-      <span class="text-secondary sarabun-regular px-4">Admin</span>
-      <li class="mb-2">
+      <span *ngIf="this.role === 'admin'" class="text-secondary sarabun-regular px-4">Admin</span>
+      <li class="mb-2" *ngIf="this.role === 'admin'">
         <a
           routerLink="/NPU/admin"
           routerLinkActive="active"
@@ -42,7 +42,7 @@
           ><i class="fa-solid fa-clipboard-list icon"></i>เกณฑ์การประเมิน</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'user' || this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/eval-form-1"
           routerLinkActive="active"
@@ -50,7 +50,7 @@
           ><i class="fa-solid fa-file-pen icon"></i>จัดทำแบบ ป-ว 01</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'user' || this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/eval-form-2"
           routerLinkActive="active"
@@ -58,7 +58,7 @@
           ><i class="fa-solid fa-file-pen icon"></i>จัดทำแบบ ป-ว 02</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'user' || this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/eval-result"
           routerLinkActive="active"
@@ -66,7 +66,7 @@
           ><i class="fa-solid fa-square-poll-horizontal icon"></i>แบบสรุปผล (ป-ว 03)</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'chairman'">
         <a
           routerLink="/NPU/report-result"
           routerLinkActive="active"
@@ -74,7 +74,7 @@
           ><i class="fa-solid fa-clipboard-check icon"></i>แจ้งผล (ป-ว 04)</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'user' || this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/appeal"
           routerLinkActive="active"
@@ -82,7 +82,7 @@
           ><i class="fa-solid fa-clipboard-question icon"></i>ยื่นอุทธรณ์</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'user' || this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/eval-track"
           routerLinkActive="active"
@@ -90,7 +90,7 @@
           ><i class="fa-solid fa-clipboard-check icon"></i>ติดตามผลการประเมิน</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/committee"
           routerLinkActive="active"
@@ -99,7 +99,7 @@
           ><i class="fa-solid fa-users-line icon"></i>คณะกรรมการประเมิน</a
         >
       </li>
-      <li class="mb-1">
+      <li class="mb-1" *ngIf="this.role === 'user' || this.role === 'committee' || this.role === 'chairman'">
         <a
           routerLink="/NPU/p-info"
           routerLinkActive="active"

@@ -45,7 +45,7 @@
                     <th>ตำแหน่ง</th>
                     <th>แบบ ปว-01</th>
                     <th>แบบ ปว-02</th>
-                    <th>แบบ ปว-03</th>
+                    <th *ngIf="this.role === 'chairman'">แบบ ปว-03</th>
                     <th>ลงชื่อเข้าร่วมการประเมิน</th>
                     <th>การยื่นอุทธรณ์</th>
                 </tr>
@@ -58,7 +58,7 @@
                     <td>{{ teacher.position }}</td>
                     <td><a class="detail" style="cursor: pointer;">ปว-01</a></td>
                     <td><a class="detail" style="cursor: pointer;">ปว-02</a></td>
-                    <td>
+                    <td *ngIf="this.role === 'chairman'">
                         <a href="NPU/committee/chairman-form" *ngIf="teacher.vote == 0" class="vote-btn">
                             <i class="fa-solid fa-pen-to-square"></i>กรอกคะแนน
                         </a>

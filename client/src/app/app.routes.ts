@@ -17,6 +17,7 @@ import { EvalForm2Component } from './pages/prepare-eval-forms/eval-form2/eval-f
 import { RegisteryComponent } from './pages/registery/registery.component';
 import { authGuard } from './guards/auth/auth.guard';
 import { CallbackComponent } from './guards/callback/callback.component';
+import { roleGuard } from './guards/role/role.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -25,20 +26,20 @@ export const routes: Routes = [
     {
         path: 'NPU', canActivate: [authGuard], component: NavbarComponent, children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'admin', component:AdminComponent },
+            { path: 'admin', canActivate: [roleGuard(['user', 'committee', 'chairman'])], component:AdminComponent },
             { path: 'home', component:HomeComponent },
             { path: 'rank', component:RankComponent },
             { path: 'eval-criteria', component:EvalCriteriaComponent },
-            { path: 'eval-form-1', component:EvalForm1Component },
-            { path: 'eval-form-2', component:EvalForm2Component },
-            { path: 'eval-result', component:EvalResultComponent },
-            { path: 'report-result', component:ReportResultComponent },
-            { path: 'appeal', component:AppealComponent },
-            { path: 'eval-track', component:EvalTrackComponent },
-            { path: 'p-info', component:PersonalInfoComponent },
-            { path: 'committee', component:CommitteeComponent },
-            { path: 'committee/check', component:CommitteeSignInComponent },
-            { path: 'committee/chairman-form', component:ChairmanFormComponent },
+            { path: 'eval-form-1', canActivate: [roleGuard(['admin'])], component:EvalForm1Component },
+            { path: 'eval-form-2', canActivate: [roleGuard(['admin'])], component:EvalForm2Component },
+            { path: 'eval-result', canActivate: [roleGuard(['admin'])], component:EvalResultComponent },
+            { path: 'report-result', canActivate: [roleGuard(['admin'])], component:ReportResultComponent },
+            { path: 'appeal', canActivate: [roleGuard(['admin'])], component:AppealComponent },
+            { path: 'eval-track', canActivate: [roleGuard(['admin'])], component:EvalTrackComponent },
+            { path: 'p-info', canActivate: [roleGuard(['admin'])], component:PersonalInfoComponent },
+            { path: 'committee', canActivate: [roleGuard(['admin', 'user'])], component:CommitteeComponent },
+            { path: 'committee/check', canActivate: [roleGuard(['admin', 'user'])], component:CommitteeSignInComponent },
+            { path: 'committee/chairman-form', canActivate: [roleGuard(['admin', 'user', 'committee'])], component:ChairmanFormComponent },
         ]
     },
 
